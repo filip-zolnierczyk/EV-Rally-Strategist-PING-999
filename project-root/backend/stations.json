@@ -1,0 +1,1372 @@
+[
+    {
+        "name": "Plac Defilad 1",
+        "lat_lon": [
+            52.230524,
+            21.007401
+        ],
+        "address": "Plac Defilad 1",
+        "connectors": [
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 11,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 11,
+                "amps": null,
+                "voltage": null
+            }
+        ]
+    },
+    {
+        "name": "H15 Boutique Hotel",
+        "lat_lon": [
+            52.225119,
+            21.011656
+        ],
+        "address": "15 Poznanska",
+        "connectors": [
+            {
+                "plug": "Tesla (Model S/X)",
+                "plug_id": 30,
+                "power_kw": 22,
+                "amps": 32,
+                "voltage": 400
+            }
+        ]
+    },
+    {
+        "name": "Emilii Plater",
+        "lat_lon": [
+            52.231945,
+            21.003838
+        ],
+        "address": "Emilii Plater",
+        "connectors": [
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 11,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 11,
+                "amps": null,
+                "voltage": null
+            }
+        ]
+    },
+    {
+        "name": "Grupa PKP Energetyka",
+        "lat_lon": [
+            52.2246863279907,
+            21.0073869814142
+        ],
+        "address": "Hoża 63/67",
+        "connectors": [
+            {
+                "plug": "CEE 7/4 - Schuko - Type F",
+                "plug_id": 28,
+                "power_kw": 3.6,
+                "amps": 16,
+                "voltage": 230
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 22,
+                "amps": 32,
+                "voltage": 400
+            }
+        ]
+    },
+    {
+        "name": "Piękna 44",
+        "lat_lon": [
+            52.223168,
+            21.013634
+        ],
+        "address": "Piękna 44",
+        "connectors": [
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 11,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 11,
+                "amps": null,
+                "voltage": null
+            }
+        ]
+    },
+    {
+        "name": "Sheraton Grand Warsaw",
+        "lat_lon": [
+            52.228205771227664,
+            21.025678355454147
+        ],
+        "address": "Marii Konopnickiej",
+        "connectors": [
+            {
+                "plug": "Type 2 (Tethered Connector) ",
+                "plug_id": 1036,
+                "power_kw": 11,
+                "amps": 16,
+                "voltage": 400
+            }
+        ]
+    },
+    {
+        "name": "Apartamenty Cosmopolitan",
+        "lat_lon": [
+            52.235546,
+            21.001557
+        ],
+        "address": "4 Twarda",
+        "connectors": [
+            {
+                "plug": "Tesla (Model S/X)",
+                "plug_id": 30,
+                "power_kw": 22,
+                "amps": 32,
+                "voltage": 400
+            }
+        ]
+    },
+    {
+        "name": "Radisson Blu Centrum Hotel Warsaw",
+        "lat_lon": [
+            52.236653,
+            20.99871
+        ],
+        "address": "Grzybowska 24",
+        "connectors": [
+            {
+                "plug": "Tesla (Model S/X)",
+                "plug_id": 30,
+                "power_kw": 22,
+                "amps": 32,
+                "voltage": 400
+            }
+        ]
+    },
+    {
+        "name": "The Westin Warsaw",
+        "lat_lon": [
+            52.235436,
+            20.996647
+        ],
+        "address": "Al. Jana Pawla Ii 21",
+        "connectors": [
+            {
+                "plug": "Tesla (Model S/X)",
+                "plug_id": 30,
+                "power_kw": 22,
+                "amps": null,
+                "voltage": null
+            }
+        ]
+    },
+    {
+        "name": "The Westin Warsaw Hotel Parking",
+        "lat_lon": [
+            52.2352313276775,
+            20.9962383109756
+        ],
+        "address": "Aleja Jana Pawła II 21",
+        "connectors": [
+            {
+                "plug": "Type 2 (Tethered Connector) ",
+                "plug_id": 1036,
+                "power_kw": 20,
+                "amps": 32,
+                "voltage": 400
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 20,
+                "amps": 32,
+                "voltage": 400
+            }
+        ]
+    },
+    {
+        "name": "GreenWay Elektrownia Powiśle",
+        "lat_lon": [
+            52.24100112411344,
+            21.02608377344086
+        ],
+        "address": "Leszczyńska 2B",
+        "connectors": [
+            {
+                "plug": "CCS (Type 2)",
+                "plug_id": 33,
+                "power_kw": 140,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 22,
+                "amps": null,
+                "voltage": null
+            }
+        ]
+    },
+    {
+        "name": "Plac Teatralny",
+        "lat_lon": [
+            52.244215,
+            21.010513
+        ],
+        "address": "Plac Teatralny",
+        "connectors": [
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 11,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 11,
+                "amps": null,
+                "voltage": null
+            }
+        ]
+    },
+    {
+        "name": "Budynek RWE - Wybrzeże Kościuszkowskie 41",
+        "lat_lon": [
+            52.239246,
+            21.030837
+        ],
+        "address": "Wybrzeże Kościuszkowskie 41",
+        "connectors": [
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 22,
+                "amps": 32,
+                "voltage": 400
+            }
+        ]
+    },
+    {
+        "name": "Centrum Nauki  Kopernik - Wybrzeże Kościuszkowskie 20",
+        "lat_lon": [
+            52.2416876131635,
+            21.0278360600147
+        ],
+        "address": "Wybrzeże Kościuszkowskie 20",
+        "connectors": [
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 22,
+                "amps": 32,
+                "voltage": 400
+            }
+        ]
+    },
+    {
+        "name": "Stanisława Rychlińskiego 2",
+        "lat_lon": [
+            52.2129496158578,
+            21.0095070651819
+        ],
+        "address": "Stanisława Rychlińskiego 2",
+        "connectors": []
+    },
+    null,
+    {
+        "name": "IBIS Hotel Zagórna",
+        "lat_lon": [
+            52.22632306434696,
+            21.042567687878773
+        ],
+        "address": "ul. Zagóna 1A",
+        "connectors": [
+            {
+                "plug": "CCS (Type 2)",
+                "plug_id": 33,
+                "power_kw": 40,
+                "amps": 100,
+                "voltage": 450
+            },
+            {
+                "plug": "CHAdeMO",
+                "plug_id": 2,
+                "power_kw": 40,
+                "amps": 100,
+                "voltage": 450
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 22,
+                "amps": 32,
+                "voltage": 400
+            }
+        ]
+    },
+    {
+        "name": "Warsaw Supercharger",
+        "lat_lon": [
+            52.207735545952005,
+            21.02934911918203
+        ],
+        "address": "Belwederska 23",
+        "connectors": [
+            {
+                "plug": "NACS / Tesla Supercharger",
+                "plug_id": 27,
+                "power_kw": 120,
+                "amps": null,
+                "voltage": null
+            }
+        ]
+    },
+    {
+        "name": "Adgar Renaissance Tower",
+        "lat_lon": [
+            52.23013,
+            20.97095
+        ],
+        "address": "ul. Skierniewicka 10a",
+        "connectors": [
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 12.7,
+                "amps": 32,
+                "voltage": 230
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 12.7,
+                "amps": 32,
+                "voltage": 230
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 12.7,
+                "amps": 32,
+                "voltage": 230
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 12.7,
+                "amps": 32,
+                "voltage": 230
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 12.7,
+                "amps": 32,
+                "voltage": 230
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 12.7,
+                "amps": 32,
+                "voltage": 230
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 12.7,
+                "amps": 32,
+                "voltage": 230
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 12.7,
+                "amps": 32,
+                "voltage": 230
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 12.7,
+                "amps": 32,
+                "voltage": 230
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 12.7,
+                "amps": 32,
+                "voltage": 230
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 12.7,
+                "amps": 32,
+                "voltage": 230
+            }
+        ]
+    },
+    {
+        "name": "Dworzec PKP Warszawa Wschodnia",
+        "lat_lon": [
+            52.252045,
+            21.050473
+        ],
+        "address": "Kijowska 20",
+        "connectors": [
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 22,
+                "amps": null,
+                "voltage": null
+            }
+        ]
+    },
+    {
+        "name": "CH Arkadia",
+        "lat_lon": [
+            52.2573732,
+            20.9845828
+        ],
+        "address": "Aleja Jana Pawła II",
+        "connectors": [
+            {
+                "plug": "CEE 7/5",
+                "plug_id": 23,
+                "power_kw": 3.5,
+                "amps": 16,
+                "voltage": 230
+            }
+        ]
+    },
+    {
+        "name": "Greenway Atrium Reduta Warszawa",
+        "lat_lon": [
+            52.213096,
+            20.951989
+        ],
+        "address": "Aleje Jerozolimskie",
+        "connectors": [
+            {
+                "plug": "CHAdeMO",
+                "plug_id": 2,
+                "power_kw": 50,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "CCS (Type 2)",
+                "plug_id": 33,
+                "power_kw": 50,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "Type 2 (Tethered Connector) ",
+                "plug_id": 1036,
+                "power_kw": 43,
+                "amps": null,
+                "voltage": null
+            }
+        ]
+    },
+    {
+        "name": "Greenway Polska Atrium Reduta",
+        "lat_lon": [
+            52.212921795134,
+            20.9517210280917
+        ],
+        "address": "Aleje Jerozolimskie",
+        "connectors": [
+            {
+                "plug": "CHAdeMO",
+                "plug_id": 2,
+                "power_kw": 50,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "CCS (Type 2)",
+                "plug_id": 33,
+                "power_kw": 50,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "Type 2 (Tethered Connector) ",
+                "plug_id": 1036,
+                "power_kw": 43,
+                "amps": 63,
+                "voltage": 400
+            }
+        ]
+    },
+    {
+        "name": "Adgar Park West",
+        "lat_lon": [
+            52.2101507,
+            20.9532592
+        ],
+        "address": "al. Jerozolimskie 181",
+        "connectors": [
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 12.7,
+                "amps": 32,
+                "voltage": 230
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 12.7,
+                "amps": 32,
+                "voltage": 230
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 12.7,
+                "amps": 32,
+                "voltage": 230
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 12.7,
+                "amps": 32,
+                "voltage": 230
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 12.7,
+                "amps": 32,
+                "voltage": 230
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 12.7,
+                "amps": 32,
+                "voltage": 230
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 12.7,
+                "amps": 32,
+                "voltage": 230
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 12.7,
+                "amps": 32,
+                "voltage": 230
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 12.7,
+                "amps": 32,
+                "voltage": 230
+            }
+        ]
+    },
+    {
+        "name": "Pory 80",
+        "lat_lon": [
+            52.190474,
+            21.044785
+        ],
+        "address": "Pory 80",
+        "connectors": [
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 11,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 11,
+                "amps": null,
+                "voltage": null
+            }
+        ]
+    },
+    {
+        "name": "BMW Group ",
+        "lat_lon": [
+            52.1853261619156,
+            21.0028606653214
+        ],
+        "address": "Wołoska",
+        "connectors": [
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 22,
+                "amps": 32,
+                "voltage": 400
+            },
+            {
+                "plug": "CCS (Type 2)",
+                "plug_id": 33,
+                "power_kw": 50,
+                "amps": null,
+                "voltage": null
+            }
+        ]
+    },
+    {
+        "name": "Konstruktorska 5",
+        "lat_lon": [
+            52.185276827261646,
+            20.997775197029114
+        ],
+        "address": "Konstruktorska 5",
+        "connectors": [
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 11,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 11,
+                "amps": null,
+                "voltage": null
+            }
+        ]
+    },
+    {
+        "name": "Greenway Polska Hotel Sheraton ",
+        "lat_lon": [
+            52.185943,
+            20.989581
+        ],
+        "address": "Suwak",
+        "connectors": [
+            {
+                "plug": "Type 2 (Tethered Connector) ",
+                "plug_id": 1036,
+                "power_kw": 22,
+                "amps": 32,
+                "voltage": 400
+            },
+            {
+                "plug": "Type 2 (Tethered Connector) ",
+                "plug_id": 1036,
+                "power_kw": 22,
+                "amps": 32,
+                "voltage": 400
+            }
+        ]
+    },
+    {
+        "name": "Włodarzewska 68",
+        "lat_lon": [
+            52.202741,
+            20.950996
+        ],
+        "address": "Włodarzewska 68",
+        "connectors": [
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 11,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 11,
+                "amps": null,
+                "voltage": null
+            }
+        ]
+    },
+    {
+        "name": "RWE",
+        "lat_lon": [
+            52.20253899999999,
+            20.95060620000004
+        ],
+        "address": "Włodarzewska 77/79",
+        "connectors": []
+    },
+    {
+        "name": "Adgar Plaza High Speed",
+        "lat_lon": [
+            52.180733,
+            20.996094
+        ],
+        "address": "Postępu 17A 02-676, Warszawa, PL",
+        "connectors": [
+            {
+                "plug": "CCS (Type 2)",
+                "plug_id": 33,
+                "power_kw": 200,
+                "amps": 200,
+                "voltage": 1000
+            },
+            {
+                "plug": "CCS (Type 2)",
+                "plug_id": 33,
+                "power_kw": 200,
+                "amps": 200,
+                "voltage": 1000
+            }
+        ]
+    },
+    {
+        "name": "Greenway Polska Galeria Mokotów",
+        "lat_lon": [
+            52.1796969160202,
+            21.0044570338289
+        ],
+        "address": "Wołoska 12",
+        "connectors": [
+            {
+                "plug": "CHAdeMO",
+                "plug_id": 2,
+                "power_kw": 44,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "CCS (Type 2)",
+                "plug_id": 33,
+                "power_kw": 44,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 22,
+                "amps": null,
+                "voltage": null
+            }
+        ]
+    },
+    {
+        "name": "Aleja Wilanowska",
+        "lat_lon": [
+            52.17904176172067,
+            21.013327875133427
+        ],
+        "address": "Aleja Wilanowska",
+        "connectors": [
+            {
+                "plug": "CHAdeMO",
+                "plug_id": 2,
+                "power_kw": 50,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 22,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "CCS (Type 2)",
+                "plug_id": 33,
+                "power_kw": 50,
+                "amps": null,
+                "voltage": null
+            }
+        ]
+    },
+    {
+        "name": "Greenway Polska Sadyba Best Mall",
+        "lat_lon": [
+            52.187917,
+            21.060267
+        ],
+        "address": "Powsińska",
+        "connectors": [
+            {
+                "plug": "CHAdeMO",
+                "plug_id": 2,
+                "power_kw": 50,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "CCS (Type 2)",
+                "plug_id": 33,
+                "power_kw": 50,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "Type 2 (Tethered Connector) ",
+                "plug_id": 1036,
+                "power_kw": 43,
+                "amps": 63,
+                "voltage": 400
+            }
+        ]
+    },
+    {
+        "name": "Marynarska 13",
+        "lat_lon": [
+            52.17803,
+            21.00058
+        ],
+        "address": "Marynarska 13",
+        "connectors": [
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 11,
+                "amps": null,
+                "voltage": null
+            }
+        ]
+    },
+    {
+        "name": "Greenway Polska Wola Park",
+        "lat_lon": [
+            52.2411701020897,
+            20.9290572902293
+        ],
+        "address": "Górczewska",
+        "connectors": [
+            {
+                "plug": "CCS (Type 2)",
+                "plug_id": 33,
+                "power_kw": 50,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "CHAdeMO",
+                "plug_id": 2,
+                "power_kw": 50,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "Type 2 (Tethered Connector) ",
+                "plug_id": 1036,
+                "power_kw": 43,
+                "amps": 63,
+                "voltage": 400
+            }
+        ]
+    },
+    {
+        "name": "Greenway Polska Wola Park",
+        "lat_lon": [
+            52.241245,
+            20.929083
+        ],
+        "address": "Górczewska 124",
+        "connectors": [
+            {
+                "plug": "CHAdeMO",
+                "plug_id": 2,
+                "power_kw": 50,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "CCS (Type 2)",
+                "plug_id": 33,
+                "power_kw": 50,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "Type 2 (Tethered Connector) ",
+                "plug_id": 1036,
+                "power_kw": 43,
+                "amps": 63,
+                "voltage": 400
+            }
+        ]
+    },
+    {
+        "name": "Ekoen Warszawa P14",
+        "lat_lon": [
+            52.17798832357374,
+            20.997358813185826
+        ],
+        "address": "Postepu 14",
+        "connectors": [
+            {
+                "plug": "CCS (Type 2)",
+                "plug_id": 33,
+                "power_kw": 350,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "CCS (Type 2)",
+                "plug_id": 33,
+                "power_kw": 240,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "CCS (Type 2)",
+                "plug_id": 33,
+                "power_kw": 150,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "CHAdeMO",
+                "plug_id": 2,
+                "power_kw": 48,
+                "amps": null,
+                "voltage": null
+            }
+        ]
+    },
+    {
+        "name": "Adgar Wave Public",
+        "lat_lon": [
+            52.177042,
+            21.001314
+        ],
+        "address": "Wincentego Rzymowskiego 53",
+        "connectors": [
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 6.4,
+                "amps": 16,
+                "voltage": 230
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 6.4,
+                "amps": 16,
+                "voltage": 230
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 6.4,
+                "amps": 16,
+                "voltage": 230
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 6.4,
+                "amps": 16,
+                "voltage": 230
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 6.4,
+                "amps": 16,
+                "voltage": 230
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 6.4,
+                "amps": 16,
+                "voltage": 230
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 6.4,
+                "amps": 16,
+                "voltage": 230
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 6.4,
+                "amps": 16,
+                "voltage": 230
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 6.4,
+                "amps": 16,
+                "voltage": 230
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 6.4,
+                "amps": 16,
+                "voltage": 230
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 6.4,
+                "amps": 16,
+                "voltage": 230
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 6.4,
+                "amps": 16,
+                "voltage": 230
+            }
+        ]
+    },
+    {
+        "name": "Nieświeska 52",
+        "lat_lon": [
+            52.265703,
+            21.082421
+        ],
+        "address": "Nieświeska 52",
+        "connectors": [
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 11,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 11,
+                "amps": null,
+                "voltage": null
+            }
+        ]
+    },
+    {
+        "name": "Greenway Polska Atrium Promenada",
+        "lat_lon": [
+            52.231556,
+            21.105694
+        ],
+        "address": "Perkuna",
+        "connectors": [
+            {
+                "plug": "CHAdeMO",
+                "plug_id": 2,
+                "power_kw": 50,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "CCS (Type 2)",
+                "plug_id": 33,
+                "power_kw": 50,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "Type 2 (Tethered Connector) ",
+                "plug_id": 1036,
+                "power_kw": 22,
+                "amps": 32,
+                "voltage": 400
+            }
+        ]
+    },
+    {
+        "name": "Greenway Atrium Promenada",
+        "lat_lon": [
+            52.2311998,
+            21.1057178
+        ],
+        "address": "Ostrobramska",
+        "connectors": [
+            {
+                "plug": "CHAdeMO",
+                "plug_id": 2,
+                "power_kw": 50,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "CCS (Type 2)",
+                "plug_id": 33,
+                "power_kw": 50,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 22,
+                "amps": null,
+                "voltage": null
+            }
+        ]
+    },
+    {
+        "name": "EV24 Charging Station, Marymoncka 34",
+        "lat_lon": [
+            52.28282926276267,
+            20.95958589026648
+        ],
+        "address": "Marymoncka 34",
+        "connectors": [
+            {
+                "plug": "Type 2 (Tethered Connector) ",
+                "plug_id": 1036,
+                "power_kw": 22.2,
+                "amps": 32,
+                "voltage": 400
+            },
+            {
+                "plug": "Type 2 (Tethered Connector) ",
+                "plug_id": 1036,
+                "power_kw": 22.2,
+                "amps": 32,
+                "voltage": 400
+            }
+        ]
+    },
+    {
+        "name": "Greenway Polska Auchan Modlińska",
+        "lat_lon": [
+            52.2947,
+            21.000013
+        ],
+        "address": "Modlińska 8",
+        "connectors": [
+            {
+                "plug": "CHAdeMO",
+                "plug_id": 2,
+                "power_kw": 50,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "CCS (Type 2)",
+                "plug_id": 33,
+                "power_kw": 50,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "Type 2 (Tethered Connector) ",
+                "plug_id": 1036,
+                "power_kw": 22,
+                "amps": 32,
+                "voltage": 400
+            }
+        ]
+    },
+    {
+        "name": "Lewinowska 37A",
+        "lat_lon": [
+            52.28545,
+            21.082
+        ],
+        "address": "Lewinowska 37A",
+        "connectors": [
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 11,
+                "amps": null,
+                "voltage": null
+            }
+        ]
+    },
+    {
+        "name": "Lidl Warszawa",
+        "lat_lon": [
+            52.303849,
+            20.987065
+        ],
+        "address": "Zabłocka 4",
+        "connectors": [
+            {
+                "plug": "CHAdeMO",
+                "plug_id": 2,
+                "power_kw": 50,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "CCS (Type 2)",
+                "plug_id": 33,
+                "power_kw": 50,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 43,
+                "amps": null,
+                "voltage": null
+            }
+        ]
+    },
+    {
+        "name": "Hotel Puławska Residence",
+        "lat_lon": [
+            52.15125458333469,
+            21.018490945177177
+        ],
+        "address": "361 Puławska",
+        "connectors": [
+            {
+                "plug": "Type 2 (Tethered Connector) ",
+                "plug_id": 1036,
+                "power_kw": 7.2,
+                "amps": null,
+                "voltage": null
+            }
+        ]
+    },
+    {
+        "name": "Royal Wilanów",
+        "lat_lon": [
+            52.163441,
+            21.082717
+        ],
+        "address": "Franciszka Klimczaka",
+        "connectors": [
+            {
+                "plug": "CEE 7/4 - Schuko - Type F",
+                "plug_id": 28,
+                "power_kw": 3.7,
+                "amps": null,
+                "voltage": null
+            }
+        ]
+    },
+    {
+        "name": "Greenway Polska Atrium Targówek",
+        "lat_lon": [
+            52.303694,
+            21.058305
+        ],
+        "address": "Głębocka",
+        "connectors": [
+            {
+                "plug": "CHAdeMO",
+                "plug_id": 2,
+                "power_kw": 50,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "CCS (Type 2)",
+                "plug_id": 33,
+                "power_kw": 50,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 22,
+                "amps": null,
+                "voltage": null
+            }
+        ]
+    },
+    {
+        "name": "Greenway Polska Galeria Młociny",
+        "lat_lon": [
+            52.290411,
+            20.927477
+        ],
+        "address": "Zgrupowania AK  Kampinos",
+        "connectors": [
+            {
+                "plug": "Type 2 (Tethered Connector) ",
+                "plug_id": 1036,
+                "power_kw": 22,
+                "amps": 32,
+                "voltage": 400
+            }
+        ]
+    },
+    {
+        "name": "Tesla Supercharger Warsaw",
+        "lat_lon": [
+            52.3019,
+            21.088114
+        ],
+        "address": "Tesla Sales & Service Center",
+        "connectors": [
+            {
+                "plug": "CCS (Type 2)",
+                "plug_id": 33,
+                "power_kw": 250,
+                "amps": null,
+                "voltage": null
+            }
+        ]
+    },
+    {
+        "name": "Rotmistrza Witolda Pileckiego",
+        "lat_lon": [
+            52.142925,
+            21.038556
+        ],
+        "address": "Rotmistrza Witolda Pileckiego",
+        "connectors": [
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 11,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 11,
+                "amps": null,
+                "voltage": null
+            }
+        ]
+    }
+]
