@@ -55,7 +55,7 @@ def calculate_route(waypoints : List[Tuple[float, float]]):
     distance_km = route["distance"] / 1000
     duration_min = route["duration"] / 60
 
-    return distance_km, duration_min
+    return distance_km, duration_min, route['geometry']['coordinates']
 
 
 def optimize_distance_with_charging(start : Tuple[float, float], end : Tuple[float, float], chargers : List[Tuple[float, float]]):
@@ -78,16 +78,27 @@ if __name__ == "__main__":
     start = "19.9450,50.0647"
     end = "21.0122,52.2297"
 
-    start = coordinates_to_tuple(start)
-    end = coordinates_to_tuple(end)
+    # start = coordinates_to_tuple(start)
+    # end = coordinates_to_tuple(end)
+    #
+    # chargers = ["51.360542, 21.130188", "51.067327 , 20.841432", "51.620237 , 20.974218 "]
+    # chargers = list(map(coordinates_to_tuple, chargers))
+    # chargers = list(map(convert_to_lonlat, chargers))
+    # direct_distance, direct_duration = calculate_distance(start, end)
+    # print(f"Direct distance: {direct_distance:.2f} km")
+    # print(f"Direct duration: {direct_duration:.2f} minutes")
+    # charger_duration, charger_distance, charger_position =optimize_distance_with_charging(start, end, chargers)
+    # print(f"Charger distance: {charger_distance:.2f} km")
+    # print(f"Charger duration: {charger_duration:.2f} minutes")
+    # print(f"Charger position: ({charger_position})")
 
-    chargers = ["51.360542, 21.130188", "51.067327 , 20.841432", "51.620237 , 20.974218 "]
-    chargers = list(map(coordinates_to_tuple, chargers))
-    chargers = list(map(convert_to_lonlat, chargers))
-    direct_distance, direct_duration = calculate_distance(start, end)
-    print(f"Direct distance: {direct_distance:.2f} km")
-    print(f"Direct duration: {direct_duration:.2f} minutes")
-    charger_duration, charger_distance, charger_position =optimize_distance_with_charging(start, end, chargers)
-    print(f"Charger distance: {charger_distance:.2f} km")
-    print(f"Charger duration: {charger_duration:.2f} minutes")
-    print(f"Charger position: ({charger_position})")
+    url = f"{OSRM_BASE_URL}/{start};{end}"
+
+
+    params = {
+        "overview": "full",
+        "geometries": "geojson"
+    }
+    response = requests.get(url, params=params)
+    data = response.json()
+    print(data['routes'][0]['geometry']['coordinates'])
