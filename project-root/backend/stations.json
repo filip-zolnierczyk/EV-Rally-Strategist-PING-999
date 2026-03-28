@@ -1,0 +1,129 @@
+[
+    {
+        "name": "Radom Supercharger",
+        "lat_lon": [
+            51.379531,
+            21.125448
+        ],
+        "address": "Toruńska 1",
+        "connectors": [
+            {
+                "plug": "NACS / Tesla Supercharger",
+                "plug_id": 27,
+                "power_kw": 120,
+                "amps": null,
+                "voltage": null
+            }
+        ]
+    },
+    {
+        "name": "KFC Radom Struga",
+        "lat_lon": [
+            51.41045237070526,
+            21.17756655541598
+        ],
+        "address": "Struga 73",
+        "connectors": [
+            {
+                "plug": "CCS (Type 2)",
+                "plug_id": 33,
+                "power_kw": 40,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "CHAdeMO",
+                "plug_id": 2,
+                "power_kw": 40,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "Type 2 (Tethered Connector) ",
+                "plug_id": 1036,
+                "power_kw": 40,
+                "amps": null,
+                "voltage": null
+            }
+        ]
+    },
+    {
+        "name": "PKN Orlen",
+        "lat_lon": [
+            51.41038363671771,
+            21.182944073380895
+        ],
+        "address": "Struga 102",
+        "connectors": [
+            {
+                "plug": "CCS (Type 2)",
+                "plug_id": 33,
+                "power_kw": 50,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "CHAdeMO",
+                "plug_id": 2,
+                "power_kw": 50,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "Type 2 (Tethered Connector) ",
+                "plug_id": 1036,
+                "power_kw": 44,
+                "amps": null,
+                "voltage": null
+            }
+        ]
+    },
+    {
+        "name": "PKN Orlen",
+        "lat_lon": [
+            51.6202373114778,
+            20.9742183843954
+        ],
+        "address": "E77",
+        "connectors": [
+            {
+                "plug": "CCS (Type 2)",
+                "plug_id": 33,
+                "power_kw": 50,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "CHAdeMO",
+                "plug_id": 2,
+                "power_kw": 50,
+                "amps": null,
+                "voltage": null
+            },
+            {
+                "plug": "Type 2 (Tethered Connector) ",
+                "plug_id": 1036,
+                "power_kw": 43,
+                "amps": 63,
+                "voltage": 400
+            }
+        ]
+    },
+    {
+        "name": "NOXO Hotel Paradiso",
+        "lat_lon": [
+            51.06732692244955,
+            20.84143187864288
+        ],
+        "address": "Harcerska 12",
+        "connectors": [
+            {
+                "plug": "Type 2 (Socket Only)",
+                "plug_id": 25,
+                "power_kw": 22,
+                "amps": null,
+                "voltage": null
+            }
+        ]
+    }
+]

@@ -5,15 +5,15 @@ from backend.app.services.osrm import *
 from backend.app.services.openchargemap import *
 from math import inf
 
-RANGE = 300
+RANGE = 120
 
 
 
-def solve(start_point : Tuple[float, float], end_point : Tuple[float, float] ):
+async def solve(start_point : Tuple[float, float], end_point : Tuple[float, float] ):
     chargings = []
 
     dist, time, coordinates = calculate_route([start_point, end_point])
-
+    print(f"direct {dist}, {time}")
     print(dist/RANGE)
 
     while dist >= RANGE * 0.8:
@@ -23,12 +23,12 @@ def solve(start_point : Tuple[float, float], end_point : Tuple[float, float] ):
         b_lon, b_lat = coordinates[int(((RANGE*0.8)/dist * len(coordinates))*0.80)]
         c_lon, c_lat = coordinates[int(((RANGE*0.8)/dist * len(coordinates))*0.85)]
         chargers = []
-        get_charging_stations_async_max_result_(a_lat, a_lon)
+        await get_charging_stations_async_max_result_(a_lat, a_lon)
         chargers += load_stations()
-        print(len(chargers))
-        get_charging_stations_async_max_result_(b_lat, b_lon)
+        # print(len(chargers))
+        await get_charging_stations_async_max_result_(b_lat, b_lon)
         chargers += load_stations()
-        get_charging_stations_async_max_result_(c_lat, c_lon)
+        await get_charging_stations_async_max_result_(c_lat, c_lon)
         chargers += load_stations()
         # print(chargers)
         chargers = list(map(convert_to_lonlat, chargers))
@@ -51,16 +51,15 @@ def solve(start_point : Tuple[float, float], end_point : Tuple[float, float] ):
 
             dist, time, coordinates = calculate_route([chargings[-1]] + [end_point])
 
-
-
-
+    dist, time , _ = calculate_route([start_point] + chargings + [end_point])
     return chargings, dist, time
 
 
 if __name__ == '__main__':
     start = (19.9450,50.0647)
     end = (21.0122,52.2297)
-    print(solve(start, end))
+    result = asyncio.run(solve(start, end))
+    print(result)
 
 
 
