@@ -18,10 +18,10 @@ def read_root():
 
 @app.post("/calculate_distance")
 def calculate_distance(data: RouteRequest):
-    resposne = dict()
+    response = dict()
     result = asyncio.run(solve(data.start, data.end))
-    resposne["chargings"] = result[0]
-    resposne["distance"] = result[1]
-    resposne["time"] = result[2]
-    resposne["coordinates"] = result[3]
-    return resposne
+    response["chargings"] = result[0]
+    response["distance"] = result[1]
+    response["time"] = result[2]
+    response["coordinates"] = result[3]
+    return response
