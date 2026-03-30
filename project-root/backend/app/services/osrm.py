@@ -91,3 +91,25 @@ if __name__ == "__main__":
     print(f"Charger distance: {charger_distance:.2f} km")
     print(f"Charger duration: {charger_duration:.2f} minutes")
     print(f"Charger position: ({charger_position})")
+
+
+def calculate_with_given_coordinates(start, end, chargers):
+    answer = dict()
+
+    start =coordinates_to_tuple(start)
+    end = coordinates_to_tuple(end)
+
+    chargers = list(map(coordinates_to_tuple, chargers))
+    chargers = list(map(convert_to_lonlat, chargers))
+    direct_distance, direct_duration = calculate_distance(start, end)
+    
+    charger_duration, charger_distance, charger_position =optimize_distance_with_charging(start, end, chargers)
+    
+    answer["direct_distance"] = direct_distance
+    answer["direct_duration"] = direct_duration
+    answer["charger_distance"] = charger_distance
+    answer["charger_duration"] = charger_duration
+    answer["charger_position"] = charger_position
+
+    return answer
+    
