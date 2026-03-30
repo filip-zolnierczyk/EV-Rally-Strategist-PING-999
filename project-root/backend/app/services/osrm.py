@@ -55,7 +55,7 @@ def calculate_route(waypoints : List[Tuple[float, float]]):
     distance_km = route["distance"] / 1000
     duration_min = route["duration"] / 60
 
-    return distance_km, duration_min
+    return distance_km, duration_min, route['geometry']['coordinates']
 
 
 def optimize_distance_with_charging(start : Tuple[float, float], end : Tuple[float, float], chargers : List[Tuple[float, float]]):
