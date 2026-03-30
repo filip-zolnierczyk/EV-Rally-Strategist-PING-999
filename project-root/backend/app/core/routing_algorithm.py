@@ -1,8 +1,7 @@
 from typing import List, Tuple
-
-from utils import load_stations
-from backend.app.services.osrm import *
-from backend.app.services.openchargemap import *
+from .utils import load_stations
+from services.osrm import *
+from services.openchargemap import *
 from math import inf
 
 RANGE = 120
