@@ -72,7 +72,6 @@ async def get_charging_stations_async_max_result(latitude, longitude, maxresults
         try:
             response = await client.get(OPENCHARGEMAP_URL, params=params, headers=headers, follow_redirects=True)
             response.raise_for_status()
-            print(response.json())
             return response.json()
         except httpx.HTTPStatusError as e:
             print(f"HTTP error: {e}")
