@@ -14,7 +14,7 @@ from typing import Tuple
 from fastapi import FastAPI
 from .services.osrm import calculate_with_given_coordinates
 from pydantic import BaseModel
-from .core.routing_algorithm import solve
+from .services.routing_algorithm import solve
 import asyncio
 
 class RouteRequest(BaseModel):

@@ -1,9 +1,8 @@
 from typing import List, Tuple
 from math import inf
+from ..core.config import OSRM_BASE_URL
 
 import requests
-
-OSRM_BASE_URL = "http://router.project-osrm.org/route/v1/driving/"
 
 # lat,lon -> lon,lat
 def convert_to_lonlat(position : Tuple[float, float]) -> Tuple[float, float]:
