@@ -5,8 +5,8 @@ Uruchamianie za pomocą dockera:
     docker compose up --build
 2. Przy kolejnych uruchomieniach:
     docker compose up
-3. Zmieniłeś kod / requirements.txt i chcesz zbudować obraz ponownie:
-    docker compose up --build
+3. Zmieniłeś kod backendu / requirements.txt i chcesz zbudować obraz ponownie:
+    docker compose up --build bakcend
 '''
 
 
