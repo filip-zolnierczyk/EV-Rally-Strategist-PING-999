@@ -1,0 +1,159 @@
+.sidebar {
+  width: 400px;
+  background-color: #f8f9fa;
+  padding: 20px;
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  border-right: 1px solid #e9ecef;
+}
+
+.sidebar h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #212529;
+}
+.sidebar h3 {
+  margin: 0 0 12px 0;
+  font-size: 1rem;
+  color: #495057;
+}
+
+.car-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.car-card {
+  background: white;
+  border: 1px solid #dee2e6;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.car-card:hover {
+  border-color: #adb5bd;
+}
+.car-card.selected {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.25);
+}
+.car-name {
+  font-weight: bold;
+  color: #212529;
+}
+.car-specs {
+  font-size: 0.85rem;
+  color: #6c757d;
+  margin-top: 4px;
+}
+
+.route-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.route-form input {
+  padding: 10px;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+.route-form button {
+  padding: 12px;
+  background-color: #212529;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+.route-form button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.summary-stats {
+  background: white;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+  margin-bottom: 16px;
+}
+
+.charging-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.charging-stop {
+  display: flex;
+  align-items: center;
+  background: white;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+}
+.stop-number {
+  background: #0d6efd;
+  color: white;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin-right: 12px;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+.stop-details .coords {
+  font-size: 0.8rem;
+  color: #6c757d;
+}
+.autocomplete-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.autocomplete-wrapper input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.suggestions-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 4px 0 0 0;
+  padding: 0;
+  list-style: none;
+  z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.suggestions-list li {
+  padding: 10px;
+  border-bottom: 1px solid #e9ecef;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: #212529;
+}
+
+.suggestions-list li:last-child {
+  border-bottom: none;
+}
+
+.suggestions-list li:hover {
+  background-color: #f8f9fa;
+}

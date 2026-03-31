@@ -12,10 +12,12 @@ Uruchamianie za pomocą dockera:
 
 from typing import Tuple
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from .services.osrm import calculate_with_given_coordinates
 from pydantic import BaseModel
 from .core.routing_algorithm import solve
 import asyncio
+import polyline
 
 class RouteRequest(BaseModel):
     start: Tuple[float, float]
@@ -24,6 +26,14 @@ class RouteRequest(BaseModel):
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 @app.get("/test")
 async def read_root():
     return {"message": "Backend działa"}
@@ -31,9 +41,13 @@ async def read_root():
 @app.post("/calculate_distance")
 async def calculate_distance(data: RouteRequest):
     chargings, distance, time, coordinates = await solve(data.start, data.end)
+
+    lat_lng_coords = [(lat, lng) for lng, lat in coordinates]
+    encoded_coords = polyline.encode(lat_lng_coords)
+    
     return {
         "chargings": chargings,
         "distance": distance,
         "time": time,
-        "coordinates": coordinates
+        "coordinates": encoded_coords
     }
