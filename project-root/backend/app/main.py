@@ -10,30 +10,11 @@ Uruchamianie za pomocą dockera:
 '''
 
 
-from typing import Tuple
 from fastapi import FastAPI
-from .services.osrm import calculate_with_given_coordinates
-from pydantic import BaseModel
-from .services.routing_algorithm import solve
-import asyncio
-
-class RouteRequest(BaseModel):
-    start: Tuple[float, float]
-    end: Tuple[float, float]
+from app.api.routes import health, vehicle_route
 
 
 app = FastAPI()
 
-@app.get("/test")
-async def read_root():
-    return {"message": "Backend działa"}
-
-@app.post("/calculate_distance")
-async def calculate_distance(data: RouteRequest):
-    chargings, distance, time, coordinates = await solve(data.start, data.end)
-    return {
-        "chargings": chargings,
-        "distance": distance,
-        "time": time,
-        "coordinates": coordinates
-    }
+app.include_router(health.router)
+app.include_router(vehicle_route.router)
