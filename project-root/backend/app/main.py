@@ -15,7 +15,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .services.osrm import calculate_with_given_coordinates
 from pydantic import BaseModel
-from .core.routing_algorithm import solve
+from .services.routing_algorithm import solve
 import asyncio
 import polyline
 
