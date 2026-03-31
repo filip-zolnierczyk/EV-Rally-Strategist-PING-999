@@ -25,15 +25,15 @@ class RouteRequest(BaseModel):
 app = FastAPI()
 
 @app.get("/test")
-def read_root():
+async def read_root():
     return {"message": "Backend działa"}
 
 @app.post("/calculate_distance")
-def calculate_distance(data: RouteRequest):
-    response = dict()
-    result = asyncio.run(solve(data.start, data.end))
-    response["chargings"] = result[0]
-    response["distance"] = result[1]
-    response["time"] = result[2]
-    response["coordinates"] = result[3]
-    return response
+async def calculate_distance(data: RouteRequest):
+    chargings, distance, time, coordinates = await solve(data.start, data.end)
+    return {
+        "chargings": chargings,
+        "distance": distance,
+        "time": time,
+        "coordinates": coordinates
+    }
