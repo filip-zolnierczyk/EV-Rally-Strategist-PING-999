@@ -1,6 +1,6 @@
 import asyncio
 import httpx
-from core.config import OPENCHARGEMAP_API_KEY, OPENCHARGEMAP_URL
+from ..core.config import OPENCHARGEMAP_API_KEY, OPENCHARGEMAP_URL
 import json
 from pathlib import Path
 
