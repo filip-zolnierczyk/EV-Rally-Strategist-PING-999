@@ -1,0 +1,11 @@
+.planner-container {
+  display: flex;
+  height: calc(100vh - 60px);
+  width: 100vw;
+  overflow: hidden;
+}
+
+.map-wrapper {
+  flex-grow: 1;
+  height: 100%;
+}
