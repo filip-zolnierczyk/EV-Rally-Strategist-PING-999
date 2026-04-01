@@ -9,7 +9,7 @@ def calculate_charging_time(battery_capacity: float, charger_param=0, start_valu
     # TODO
     return 0.0
 
-def solve(start_point : Tuple[float, float], end_point : Tuple[float, float] , RANGE=600, BATTERY_CAPACITY=1000):
+async def solve(start_point : Tuple[float, float], end_point : Tuple[float, float] , RANGE=600, BATTERY_CAPACITY=1000):
     curr_range = RANGE
     chargings = {"cords" : [], "times" : []}
 
@@ -59,7 +59,7 @@ def solve(start_point : Tuple[float, float], end_point : Tuple[float, float] , R
 if __name__ == '__main__':
     start = (19.9450,50.0647)
     end = (21.0122,52.2297)
-    result = solve(start, end)
+    result = asyncio.run(solve(start, end))
     print(result[:-1]) # without the exact coordinates of the route
 
 
