@@ -53,6 +53,9 @@ def calculate_route(waypoints : List[Tuple[float, float]], steps=True):
     }
     response = requests.get(url, params=params)
     data = response.json()
+    if not data["routes"]:
+        print("[OSRM] No routes found")
+        return Exception("[OSRM] No routes found")
     route = data["routes"][0]
 
     distance_km = route["distance"] / 1000
