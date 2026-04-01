@@ -9,7 +9,7 @@ def calculate_charging_time(battery_capacity: float, charger_param=0, start_valu
     # TODO
     return 0.0
 
-def solve(start_point : Tuple[float, float], end_point : Tuple[float, float] , RANGE=120, BATTERY_CAPACITY=1000):
+def solve(start_point : Tuple[float, float], end_point : Tuple[float, float] , RANGE=600, BATTERY_CAPACITY=1000):
     curr_range = RANGE
     chargings = {"cords" : [], "times" : []}
 
