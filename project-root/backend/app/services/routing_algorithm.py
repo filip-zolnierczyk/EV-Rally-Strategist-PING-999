@@ -9,7 +9,7 @@ def calculate_charging_time(battery_capacity: float, charger_param=0, start_valu
     # TODO
     return 0.0
 
-async def solve(start_point : Tuple[float, float], end_point : Tuple[float, float] , RANGE=600, BATTERY_CAPACITY=1000):
+async def solve(start_point : Tuple[float, float], end_point : Tuple[float, float] , RANGE=450, BATTERY_CAPACITY=1000):
     curr_range = RANGE
     chargings = {"cords" : [], "times" : []}
 
@@ -23,10 +23,10 @@ async def solve(start_point : Tuple[float, float], end_point : Tuple[float, floa
         chargers = set()
         # stations = asyncio.run(get_charging_stations_async_max_result_(a_lat, a_lon))
         # chargers += set([s["lat_lon"] for s in stations])
-        stations = asyncio.run(get_charging_stations_async_max_result_(b_lat, b_lon))
-        chargers |= {tuple(s["lat_lon"]) for s in stations}
-        stations = asyncio.run(get_charging_stations_async_max_result_(c_lat, c_lon, max_result=3))
-        chargers |= {tuple(s["lat_lon"]) for s in stations}
+        stations = await get_charging_stations_async_max_result_(b_lat, b_lon, max_result=3)
+        chargers |= {tuple(s["lat_lon"]) for s in stations if 'lat_lon' in s}
+        stations = await get_charging_stations_async_max_result_(c_lat, c_lon, max_result=3)
+        chargers |= {tuple(s["lat_lon"]) for s in stations if 'lat_lon' in s}
         chargers = list(map(convert_to_lonlat, chargers))
         min_time = inf
         min_d = 0
