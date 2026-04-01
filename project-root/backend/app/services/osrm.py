@@ -18,31 +18,35 @@ def coordinates_to_tuple(coordinates : str) -> Tuple[float, float]:
     lat, lon = result.split(",")
     return (float(lon), float(lat))
 
-def calculate_distance(start : Tuple[float, float], end : Tuple[float, float]):
-    start_s = coordinates_to_str(start)
-    end_s = coordinates_to_str(end)
-    url = f"{OSRM_BASE_URL}/{start_s};{end_s}"
-    params = {
-        "overview": "full",
-        "geometries": "geojson"
-    }
-    response = requests.get(url, params=params)
-    data = response.json()
+# unused
+# def calculate_distance(start : Tuple[float, float], end : Tuple[float, float]):
+#     start_s = coordinates_to_str(start)
+#     end_s = coordinates_to_str(end)
+#     url = f"{OSRM_BASE_URL}/{start_s};{end_s}"
+#     params = {
+#         "overview": "full",
+#         "geometries": "geojson"
+#     }
+#     response = requests.get(url, params=params)
+#     data = response.json()
+#
+#     route = data["routes"][0]
+#
+#     distance_km = route["distance"] / 1000
+#     duration_min = route["duration"] / 60
+#
+#     return distance_km, duration_min
 
-    route = data["routes"][0]
-
-    distance_km = route["distance"] / 1000
-    duration_min = route["duration"] / 60
-
-    return distance_km, duration_min
-
-def calculate_route(waypoints : List[Tuple[float, float]]):
+def calculate_route(waypoints : List[Tuple[float, float]], steps=True):
     url = f"{OSRM_BASE_URL}"
     for waypoint in waypoints:
         waypoint_s = coordinates_to_str(waypoint)
         url = f"{url}{waypoint_s};"
     url = url[:-1]
 
+    if steps:
+        url += "?steps=true"
+
     params = {
         "overview": "full",
         "geometries": "geojson"
@@ -54,23 +58,23 @@ def calculate_route(waypoints : List[Tuple[float, float]]):
     distance_km = route["distance"] / 1000
     duration_min = route["duration"] / 60
 
-    return distance_km, duration_min, route['geometry']['coordinates']
+    return distance_km, duration_min, route['geometry']['coordinates'], route['legs']
 
-
-def optimize_distance_with_charging(start : Tuple[float, float], end : Tuple[float, float], chargers : List[Tuple[float, float]]):
-    # for now testing routing with only one charging, only for api testing, will change it asap
-    # optimizing for time, I guess it could be a parameter to optimize time vs distance idk
-    current_duration = inf
-    current_distance = inf
-    current_charger_position = ""
-    for charger in chargers:
-        distance, duration = calculate_route([start, charger, end])
-        if duration < current_duration:
-            current_duration = duration
-            current_distance = distance
-            current_charger_position = charger
-
-    return current_duration, current_distance, current_charger_position
+# unused
+# def optimize_distance_with_charging(start : Tuple[float, float], end : Tuple[float, float], chargers : List[Tuple[float, float]]):
+#     # for now testing routing with only one charging, only for api testing, will change it asap
+#     # optimizing for time, I guess it could be a parameter to optimize time vs distance idk
+#     current_duration = inf
+#     current_distance = inf
+#     current_charger_position = ""
+#     for charger in chargers:
+#         distance, duration = calculate_route([start, charger, end])
+#         if duration < current_duration:
+#             current_duration = duration
+#             current_distance = distance
+#             current_charger_position = charger
+#
+#     return current_duration, current_distance, current_charger_position
 
 
 if __name__ == "__main__":
