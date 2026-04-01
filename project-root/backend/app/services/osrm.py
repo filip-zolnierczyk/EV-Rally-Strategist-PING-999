@@ -57,22 +57,6 @@ def calculate_route(waypoints : List[Tuple[float, float]]):
     return distance_km, duration_min, route['geometry']['coordinates']
 
 
-def optimize_distance_with_charging(start : Tuple[float, float], end : Tuple[float, float], chargers : List[Tuple[float, float]]):
-    # for now testing routing with only one charging, only for api testing, will change it asap
-    # optimizing for time, I guess it could be a parameter to optimize time vs distance idk
-    current_duration = inf
-    current_distance = inf
-    current_charger_position = ""
-    for charger in chargers:
-        distance, duration = calculate_route([start, charger, end])
-        if duration < current_duration:
-            current_duration = duration
-            current_distance = distance
-            current_charger_position = charger
-
-    return current_duration, current_distance, current_charger_position
-
-
 if __name__ == "__main__":
     start = "19.9450,50.0647"
     end = "21.0122,52.2297"
