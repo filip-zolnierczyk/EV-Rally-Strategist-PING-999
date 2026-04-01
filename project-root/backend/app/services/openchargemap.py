@@ -5,28 +5,34 @@ import json
 from pathlib import Path
 
 def transform_charger_data(raw_station):
+    if not isinstance(raw_station, dict):
+        return {}
 
-    status = raw_station.get("StatusType", {}).get("Title", "Unknown")
+    status_obj = raw_station.get("StatusType") or {}
+    status = status_obj.get("Title", "Unknown")
+
     if status != "Operational":
-        return {} 
+        return {}
 
-    address_info = raw_station.get("AddressInfo", {})
-    
+    address_info = raw_station.get("AddressInfo") or {}
+
     connections = []
-    for conn in raw_station.get("Connections", []):
+    for conn in (raw_station.get("Connections") or []):
+        conn = conn or {}
+        connection_type = conn.get("ConnectionType") or {}
         connections.append({
-            "plug": conn.get("ConnectionType", {}).get("Title", "Unknown"),
-            "plug_id": conn.get("ConnectionTypeID","Unknown"),
+            "plug": connection_type.get("Title", "Unknown"),
+            "plug_id": conn.get("ConnectionTypeID", "Unknown"),
             "power_kw": conn.get("PowerKW"),
             "amps": conn.get("Amps"),
-            "voltage": conn.get("Voltage")
+            "voltage": conn.get("Voltage"),
         })
 
     return {
         "name": address_info.get("Title"),
         "lat_lon": [address_info.get("Latitude"), address_info.get("Longitude")],
         "address": address_info.get("AddressLine1"),
-        "connectors": connections
+        "connectors": connections,
     }
 
 async def get_charging_stations_async(latitude, longitude, distance):
@@ -90,6 +96,8 @@ async def get_charging_stations_async_max_result(latitude, longitude, maxresults
 
 async def get_charging_stations_async_max_result_(latitude, longitude, max_result=3):
     stations = await get_charging_stations_async_max_result(latitude, longitude, maxresults=max_result, distance=100)
+    if not stations:
+        return []
     return [transform_charger_data(station) for station in stations]
 
 async def main():
