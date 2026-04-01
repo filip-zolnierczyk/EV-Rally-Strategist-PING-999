@@ -28,8 +28,6 @@ async def solve(start_point : Tuple[float, float], end_point : Tuple[float, floa
         stations = asyncio.run(get_charging_stations_async_max_result_(c_lat, c_lon, max_result=3))
         chargers |= {tuple(s["lat_lon"]) for s in stations}
         chargers = list(map(convert_to_lonlat, chargers))
-        print(chargers)
-        print(len(chargers))
         min_time = inf
         min_d = 0
         charging_cords = None
