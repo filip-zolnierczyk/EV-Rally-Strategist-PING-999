@@ -1,14 +1,13 @@
 from typing import List, Tuple
-from .utils import load_stations
 from ..services.osrm import *
 from ..services.openchargemap import *
 from math import inf
 import asyncio
 
-RANGE = 120
+RANGE = 400
 
 
-def solve(start_point : Tuple[float, float], end_point : Tuple[float, float] ):
+async def solve(start_point : Tuple[float, float], end_point : Tuple[float, float] ):
     chargings = []
 
     dist, time, coordinates = calculate_route([start_point, end_point])
@@ -21,10 +20,10 @@ def solve(start_point : Tuple[float, float], end_point : Tuple[float, float] ):
         chargers = []
         # stations = asyncio.run(get_charging_stations_async_max_result_(a_lat, a_lon))
         # chargers += [s["lat_lon"] for s in stations]
-        stations = asyncio.run(get_charging_stations_async_max_result_(b_lat, b_lon))
-        chargers += [s["lat_lon"] for s in stations]
-        stations = asyncio.run(get_charging_stations_async_max_result_(c_lat, c_lon))
-        chargers += [s["lat_lon"] for s in stations]
+        stations = await get_charging_stations_async_max_result_(b_lat, b_lon)
+        chargers += [s["lat_lon"] for s in stations if "lat_lon" in s]
+        stations = await get_charging_stations_async_max_result_(c_lat, c_lon)
+        chargers += [s["lat_lon"] for s in stations if "lat_lon" in s]
         chargers = list(map(convert_to_lonlat, chargers))
         min_time = inf
         min_d = 0
@@ -48,7 +47,7 @@ def solve(start_point : Tuple[float, float], end_point : Tuple[float, float] ):
 if __name__ == '__main__':
     start = (19.9450,50.0647)
     end = (21.0122,52.2297)
-    result = solve(start, end)
+    result = asyncio.run(solve(start, end))
     print(result[:-1]) # without the exact coordinates of the route
 
 

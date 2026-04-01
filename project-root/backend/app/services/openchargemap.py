@@ -6,7 +6,11 @@ from pathlib import Path
 
 def transform_charger_data(raw_station):
 
-    status = raw_station.get("StatusType", {}).get("Title", "Unknown")
+    status = raw_station.get("StatusType", {})
+    if status is None:
+        return {}
+    status = status.get("Title", "Unknown")
+    
     if status != "Operational":
         return {} 
 
