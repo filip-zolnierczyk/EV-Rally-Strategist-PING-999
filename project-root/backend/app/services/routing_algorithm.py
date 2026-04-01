@@ -13,7 +13,7 @@ async def solve(start_point : Tuple[float, float], end_point : Tuple[float, floa
     curr_range = RANGE
     chargings = {"cords" : [], "times" : []}
 
-    dist, time, coordinates, _ = calculate_route([start_point, end_point])
+    dist, time, coordinates, _ = calculate_route([start_point, end_point], steps=False)
 
     while dist >= RANGE * 0.8:
         # 25%-15% range
@@ -44,13 +44,13 @@ async def solve(start_point : Tuple[float, float], end_point : Tuple[float, floa
         if min_time < inf:
             dist -= min_d
             chargings['cords'].append(charging_cords)
-            dist, time, coordinates, _ = calculate_route([chargings['cords'][-1]] + [end_point])
+            dist, time, coordinates, _ = calculate_route([chargings['cords'][-1]] + [end_point], steps=False)
             curr_range -= best_l
             charging_time = calculate_charging_time(BATTERY_CAPACITY, start_value=curr_range/RANGE)
             chargings['times'].append(charging_time)
             curr_range = RANGE * 0.8
 
-    dist, time , coordinates, _ = calculate_route([start_point] + chargings['cords'] + [end_point])
+    dist, time , coordinates, _ = calculate_route([start_point] + chargings['cords'] + [end_point], steps=False)
     return chargings['cords'], dist, time, coordinates
 
 
