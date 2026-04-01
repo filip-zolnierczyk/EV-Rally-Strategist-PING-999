@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 
+# not used anymore, deleting soon
 def load_stations():
     current_file = Path(__file__)
     stations_path = current_file.parent.parent.parent / "stations.json"

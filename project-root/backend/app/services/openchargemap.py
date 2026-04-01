@@ -80,14 +80,17 @@ async def get_charging_stations_async_max_result(latitude, longitude, maxresults
             print(f"Request error: {e}")
             return None
 
+# async def get_charging_stations_async_max_result_(latitude, longitude):
+#     stations = await get_charging_stations_async_max_result(latitude, longitude, maxresults=3, distance=100)
+#
+#     current_file = Path(__file__)
+#     stations_path = current_file.parent.parent.parent / "stations.json"
+#     with open(stations_path, 'w', encoding='utf-8') as f:
+#         json.dump([transform_charger_data(station) for station in stations], f, indent=4, ensure_ascii=False)
+
 async def get_charging_stations_async_max_result_(latitude, longitude):
-    stations = await get_charging_stations_async_max_result(latitude, longitude, maxresults=5, distance=100)
-
-    current_file = Path(__file__)
-    stations_path = current_file.parent.parent.parent / "stations.json"
-    with open(stations_path, 'w', encoding='utf-8') as f:
-        json.dump([transform_charger_data(station) for station in stations], f, indent=4, ensure_ascii=False)
-
+    stations = await get_charging_stations_async_max_result(latitude, longitude, maxresults=3, distance=100)
+    return [transform_charger_data(station) for station in stations]
 
 async def main():
     stations = await get_charging_stations_async(52.2297, 21.0122, 10)
