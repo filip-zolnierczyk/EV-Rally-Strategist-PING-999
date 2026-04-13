@@ -1,16 +1,25 @@
-from typing import List, Tuple
-from .utils import load_stations
+from typing import List, Tuple, Optional
 from ..services.osrm import *
 from ..services.openchargemap import *
+from ..services.openmeteo import *
 from math import inf
 import asyncio
+from datetime import datetime, timedelta
 
 def calculate_charging_time(battery_capacity: float, charger_param=0, start_value:float=0.15, goal_value:float=0.8) -> float:
     # TODO
     return 0.0
 
+def calculate_range(curr_range : float, temp : Optional[float]) -> int:
+    # TODO
+    if temp is None:
+        # może się zdarzyć żę temperatura będzie None
+        return curr_range
+    return curr_range
+
 async def solve(start_point : Tuple[float, float], end_point : Tuple[float, float] , RANGE=450, BATTERY_CAPACITY=1000):
-    curr_range = RANGE
+    temperature = await get_temperature_async(start_point[1], start_point[0], datetime.now())
+    curr_range = calculate_range(RANGE, temperature['temp'])
     chargings = {"cords" : [], "times" : []}
 
     dist, time, coordinates, _ = calculate_route([start_point, end_point], steps=False)
@@ -48,7 +57,8 @@ async def solve(start_point : Tuple[float, float], end_point : Tuple[float, floa
             curr_range -= best_l
             charging_time = calculate_charging_time(BATTERY_CAPACITY, start_value=curr_range/RANGE)
             chargings['times'].append(charging_time)
-            curr_range = RANGE * 0.8
+            temperature = await get_temperature_async(charging_cords[1], charging_cords[0], datetime.now() + timedelta(minutes=min_time))
+            curr_range = calculate_range(0.8*RANGE, temperature['temp'])
 
     dist, time , coordinates, _ = calculate_route([start_point] + chargings['cords'] + [end_point], steps=False)
     return chargings['cords'], dist, time, coordinates
