@@ -10,12 +10,32 @@ def calculate_charging_time(battery_capacity: float, charger_param=0, start_valu
     # TODO
     return 0.0
 
-def calculate_range(curr_range : float, temp : Optional[float]) -> float:
+def calculate_range(curr_range : float, temperature : Optional[float]) -> float:
     # TODO
-    if temp is None:
+    if temperature is None:
         # może się zdarzyć żę temperatura będzie None
         return curr_range
-    return curr_range
+
+    # Przykładowa propozycja copilota dla prostej heury:
+
+    optimal_temp = 20.0  # best efficiency around 20°C
+
+    # how strongly temperature affects range
+    penalty = 0.02
+
+    delta = abs(temperature - optimal_temp)
+
+    # linear degradation
+    factor = 1.0 - penalty * delta
+
+    # clamp to avoid unrealistic values
+    if factor < 0.6:
+        factor = 0.6
+    if factor > 1.05:
+        factor = 1.05
+
+    return curr_range * factor
+
 
 
 # Główna funkcja algorytmu wyznaczania trasy z postojami na ładowanie.
