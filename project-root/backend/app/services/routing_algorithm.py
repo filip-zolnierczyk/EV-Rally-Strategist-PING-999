@@ -10,7 +10,7 @@ def calculate_charging_time(battery_capacity: float, charger_param=0, start_valu
     # TODO
     return 0.0
 
-def calculate_range(curr_range : float, temperature : Optional[float]) -> float:
+def calculate_range(curr_range : float, temperature : Optional) -> float:
     # TODO
     if temperature is None:
         # może się zdarzyć żę temperatura będzie None
@@ -23,7 +23,7 @@ def calculate_range(curr_range : float, temperature : Optional[float]) -> float:
     # how strongly temperature affects range
     penalty = 0.02
 
-    delta = abs(temperature - optimal_temp)
+    delta = abs(temperature['temp'] - optimal_temp)
 
     # linear degradation
     factor = 1.0 - penalty * delta
@@ -45,7 +45,7 @@ async def solve(start_point : Tuple[float, float], end_point : Tuple[float, floa
     # Pobranie bieżącej temperatury dla punktu startowego.
     temperature = await get_temperature_async(start_point[1], start_point[0], datetime.now())
     # Wyznaczenie efektywnego zasięgu (obecnie bez realnej korekty, bo calculate_range to TODO).
-    curr_range = calculate_range(RANGE, temperature['temp'])
+    curr_range = calculate_range(RANGE, temperature)
 
     # Struktura przechowująca:
     # - 'cords': współrzędne wybranych stacji ładowania
@@ -110,7 +110,7 @@ async def solve(start_point : Tuple[float, float], end_point : Tuple[float, floa
             # Pobranie prognozy temperatury na moment dotarcia do tej stacji
             # i przeliczenie zasięgu po ładowaniu do 80%.
             temperature = await get_temperature_async(charging_cords[1], charging_cords[0], datetime.now() + timedelta(minutes=min_time))
-            curr_range = calculate_range(0.8*RANGE, temperature['temp'])
+            curr_range = calculate_range(0.8*RANGE, temperature)
 
     # Końcowe przeliczenie pełnej trasy ze wszystkimi przystankami.
     dist, time , coordinates, _ = calculate_route([start_point] + chargings['cords'] + [end_point], steps=False)
