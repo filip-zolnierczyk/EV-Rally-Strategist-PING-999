@@ -8,31 +8,31 @@ def transform_charger_data(raw_station):
     if not isinstance(raw_station, dict):
         return {}
 
-    status_obj = raw_station.get("StatusType") or {}
-    status = status_obj.get("Title", "Unknown")
+    status = raw_station.get("StatusType", {})
+    if status is None:
+        return {}
+    status = status.get("Title", "Unknown")
 
     if status != "Operational":
-        return {}
+        return {} 
 
-    address_info = raw_station.get("AddressInfo") or {}
-
+    address_info = raw_station.get("AddressInfo", {})
+    
     connections = []
-    for conn in (raw_station.get("Connections") or []):
-        conn = conn or {}
-        connection_type = conn.get("ConnectionType") or {}
+    for conn in raw_station.get("Connections", []):
         connections.append({
-            "plug": connection_type.get("Title", "Unknown"),
-            "plug_id": conn.get("ConnectionTypeID", "Unknown"),
+            "plug": conn.get("ConnectionType", {}).get("Title", "Unknown"),
+            "plug_id": conn.get("ConnectionTypeID","Unknown"),
             "power_kw": conn.get("PowerKW"),
             "amps": conn.get("Amps"),
-            "voltage": conn.get("Voltage"),
+            "voltage": conn.get("Voltage")
         })
 
     return {
         "name": address_info.get("Title"),
         "lat_lon": [address_info.get("Latitude"), address_info.get("Longitude")],
         "address": address_info.get("AddressLine1"),
-        "connectors": connections,
+        "connectors": connections
     }
 
 async def get_charging_stations_async(latitude, longitude, distance):
@@ -78,13 +78,17 @@ async def get_charging_stations_async_max_result(latitude, longitude, maxresults
         try:
             response = await client.get(OPENCHARGEMAP_URL, params=params, headers=headers, follow_redirects=True)
             response.raise_for_status()
-            return response.json()
+            if response.json() is None:
+                print(f"No data received from OpenChargeMap API")
+                return []
+            else:
+                return response.json()
         except httpx.HTTPStatusError as e:
             print(f"HTTP error: {e}")
-            return None
+            return []
         except httpx.RequestError as e:
             print(f"Request error: {e}")
-            return None
+            return []
 
 # async def get_charging_stations_async_max_result_(latitude, longitude):
 #     stations = await get_charging_stations_async_max_result(latitude, longitude, maxresults=3, distance=100)

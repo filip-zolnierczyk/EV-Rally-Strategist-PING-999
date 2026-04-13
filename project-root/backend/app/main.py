@@ -15,6 +15,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from .services.routing_algorithm import solve
+from .services.ev_logic import get_cars as get_list_of_cars
 import asyncio
 import polyline
 
@@ -50,3 +51,7 @@ async def calculate_distance(data: RouteRequest):
         "time": time,
         "coordinates": encoded_coords
     }
+
+@app.get("/cars")
+async def get_cars():
+    return await get_list_of_cars()
