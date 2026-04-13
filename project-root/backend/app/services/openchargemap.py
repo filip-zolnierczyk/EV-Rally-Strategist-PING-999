@@ -10,7 +10,7 @@ def transform_charger_data(raw_station):
     if status is None:
         return {}
     status = status.get("Title", "Unknown")
-    
+
     if status != "Operational":
         return {} 
 
@@ -76,13 +76,17 @@ async def get_charging_stations_async_max_result(latitude, longitude, maxresults
         try:
             response = await client.get(OPENCHARGEMAP_URL, params=params, headers=headers, follow_redirects=True)
             response.raise_for_status()
-            return response.json()
+            if response.json() is None:
+                print(f"No data received from OpenChargeMap API")
+                return []
+            else:
+                return response.json()
         except httpx.HTTPStatusError as e:
             print(f"HTTP error: {e}")
-            return None
+            return []
         except httpx.RequestError as e:
             print(f"Request error: {e}")
-            return None
+            return []
 
 # async def get_charging_stations_async_max_result_(latitude, longitude):
 #     stations = await get_charging_stations_async_max_result(latitude, longitude, maxresults=3, distance=100)
