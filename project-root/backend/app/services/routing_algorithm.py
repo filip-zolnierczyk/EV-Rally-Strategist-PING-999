@@ -16,11 +16,15 @@ from ..services.ev_logic import *
 async def solve(
         start_point : Tuple[float, float],
         end_point : Tuple[float, float] ,
-        carId: str):
+        carId: str,
+        date=datetime.now(),
+        charging_to_100=False #
+):
+    charging_cap = 1.0 if charging_to_100 else 0.8
     RANGE, BATTERY_CAPACITY = get_car_range_and_battery_capacity(carId)
 
     #Pobranie aktualnego czasu
-    now = datetime.now() - timedelta(days=7) # odejmujemy dzień, aby mieć pewność że pogoda będzie dostępna w archiwum Open Meteo
+    now = date - timedelta(days=7) # odejmujemy dzień, aby mieć pewność że pogoda będzie dostępna w archiwum Open Meteo
     print(now)
 
     # Pobranie bieżącej temperatury dla punktu startowego.
@@ -28,7 +32,7 @@ async def solve(
     now = datetime(now.year, now.month, now.day, now.hour, now.minute)
     temperature = await get_temperature_async(start_point[1], start_point[0], now)
     # Wyznaczenie efektywnego zasięgu.
-    curr_range = calculate_range(RANGE, temperature)
+    curr_range = calculate_range(charging_cap * RANGE, temperature)
 
     # Struktura przechowująca:
     # - 'cords': współrzędne wybranych stacji ładowania
@@ -87,13 +91,13 @@ async def solve(
             curr_range -= best_l
 
             # Wyznaczenie czasu ładowania dla aktualnego postoju.
-            charging_time = calculate_charging_time(BATTERY_CAPACITY, plug_id=2, start_value=curr_range/RANGE)
+            charging_time = calculate_charging_time(BATTERY_CAPACITY, plug_id=2, start_value=curr_range/RANGE, goal_value=charging_cap)
             chargings['times'].append(charging_time)
 
             # Pobranie prognozy temperatury na moment dotarcia do tej stacji
             # i przeliczenie zasięgu po ładowaniu do 80%.
             temperature = await get_temperature_async(charging_cords[1], charging_cords[0], now + timedelta(minutes=min_time))
-            curr_range = calculate_range(0.8*RANGE, temperature)
+            curr_range = calculate_range(charging_cap*RANGE, temperature)
         else:
             raise Exception(f"Could not find a charger on the route")
 
