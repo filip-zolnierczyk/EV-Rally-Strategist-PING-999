@@ -15,7 +15,7 @@ PLUG_MAPPING = {
     # DC - Prąd stały (Szybkie ładowanie)
     33: {"type": "dc", "key": "ccs", "charger_power_kw": 150.0},        # CCS (Type 2)
     2: {"type": "dc", "key": "chademo", "charger_power_kw": 50.0},     # CHAdeMO
-    27: {"type": "dc", "key": "tesla", "charger_power_kw": 50.0},      # Tesla Supercharger
+    27: {"type": "dc", "key": "tesla", "charger_power_kw": 250.0},      # Tesla Supercharger
 }
 
 
@@ -83,9 +83,9 @@ def calculate_charging_time(
         raise Exception(f"Plug id {plug_id} is not supported")
 
     if PLUG_MAPPING[plug_id]["type"] == "ac":
-        return calculate_charging_time_ac(battery_capacity, PLUG_MAPPING[plug_id]['type'], start_value, goal_value)
+        return calculate_charging_time_ac(battery_capacity, PLUG_MAPPING[plug_id]['charger_power_kw'], start_value, goal_value)
     elif PLUG_MAPPING[plug_id]["type"] == "dc":
-        return calculate_charging_time_dc(battery_capacity, PLUG_MAPPING[plug_id]['type'], start_value, goal_value)
+        return calculate_charging_time_dc(battery_capacity, PLUG_MAPPING[plug_id]['charger_power_kw'], start_value, goal_value)
 
     raise Exception(f"Plug id {plug_id} is not supported")
 

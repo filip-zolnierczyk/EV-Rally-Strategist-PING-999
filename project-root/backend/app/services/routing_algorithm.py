@@ -5,7 +5,7 @@ from ..services.openmeteo import *
 from math import inf
 import asyncio
 from datetime import datetime, timedelta
-from ev_logic import *
+from ..services.ev_logic import *
 
 
 
@@ -34,23 +34,23 @@ async def solve(start_point : Tuple[float, float], end_point : Tuple[float, floa
         c_lon, c_lat = coordinates[int(((RANGE*0.8)/dist * len(coordinates))*0.85)]
 
         # Używamy zbioru, aby automatycznie usuwać duplikaty stacji.
-        chargers = set()
+        charger_cord_set = set()
 
         # Pobranie kandydatów stacji dla obu punktów i dodanie ich do wspólnego zbioru.
         stations = await get_charging_stations_async_max_result_(b_lat, b_lon, max_result=3)
-        chargers |= {tuple(s["lat_lon"]) for s in stations if 'lat_lon' in s}
+        charger_cord_set |= {tuple(s["lat_lon"]) for s in stations if 'lat_lon' in s}
         stations = await get_charging_stations_async_max_result_(c_lat, c_lon, max_result=3)
-        chargers |= {tuple(s["lat_lon"]) for s in stations if 'lat_lon' in s}
+        charger_cord_set |= {tuple(s["lat_lon"]) for s in stations if 'lat_lon' in s}
 
         # Konwersja współrzędnych do oczekiwanego formatu (lon, lat).
-        chargers = list(map(convert_to_lonlat, chargers))
+        charger_cord_set = list(map(convert_to_lonlat, charger_cord_set))
 
         # Szukamy stacji, która minimalizuje całkowity czas przejazdu po jej dodaniu do trasy.
         min_time = inf
         min_d = 0
         charging_cords = None
         best_l = 0
-        for charger in chargers:
+        for charger in charger_cord_set:
             # Wyznaczenie trasy z dotychczasowymi ładowaniami + nowym kandydatem.
             # l zawiera listę „legs”, dzięki czemu możemy odczytać długość odcinka do aktualnie rozważanej stacji.
             d, t, c, l = calculate_route([start_point] + chargings['cords'] + [charger] + [end_point])
@@ -76,19 +76,22 @@ async def solve(start_point : Tuple[float, float], end_point : Tuple[float, floa
             curr_range -= best_l
 
             # Wyznaczenie czasu ładowania dla aktualnego postoju.
-            charging_time = calculate_charging_time(BATTERY_CAPACITY, start_value=curr_range/RANGE)
+            charging_time = calculate_charging_time(BATTERY_CAPACITY, plug_id=2, start_value=curr_range/RANGE)
             chargings['times'].append(charging_time)
 
             # Pobranie prognozy temperatury na moment dotarcia do tej stacji
             # i przeliczenie zasięgu po ładowaniu do 80%.
             temperature = await get_temperature_async(charging_cords[1], charging_cords[0], datetime.now() + timedelta(minutes=min_time))
             curr_range = calculate_range(0.8*RANGE, temperature)
+        else:
+            raise Exception(f"Could not find a charger on the route")
 
     # Końcowe przeliczenie pełnej trasy ze wszystkimi przystankami.
     dist, time , coordinates, _ = calculate_route([start_point] + chargings['cords'] + [end_point], steps=False)
 
-    # Zwracamy: listę stacji ładowania, dystans, czas, geometrię trasy.
-    return chargings['cords'], dist, time, coordinates
+    # print(f" DEBUG: {chargings['times']}")
+    # Zwracamy: listę stacji ładowania, dystans, czas, geometrię trasy, ew czasy każdego ładowania
+    return chargings['cords'], dist, time, coordinates#, chargings['times']
 
 
 if __name__ == '__main__':
