@@ -9,6 +9,7 @@ interface SidebarProps {
     startCoords: [number, number],
     endCoords: [number, number],
     carId: string,
+    departureDateTime: string,
   ) => void;
   routeData: any;
   isLoading: boolean;
@@ -24,6 +25,11 @@ export default function Sidebar({
 
   const [cars, setCars] = useState<Car[]>([]);
   const [selectedCar, setSelectedCar] = useState<string | null>(null);
+  const [departureDateTime, setDepartureDateTime] = useState<string>(() => {
+    const now = new Date();
+    const tzOffset = now.getTimezoneOffset() * 60000;
+    return new Date(now.getTime() - tzOffset).toISOString().slice(0, 16);
+  });
 
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedBrand, setSelectedBrand] = useState("");
@@ -45,7 +51,7 @@ export default function Sidebar({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (startCoords && endCoords && selectedCar) {
-      onPlanRoute(startCoords, endCoords, selectedCar);
+      onPlanRoute(startCoords, endCoords, selectedCar, departureDateTime);
     } else {
       alert("Wybierz dokładny adres z listy podpowiedzi.");
     }
@@ -147,6 +153,16 @@ export default function Sidebar({
             placeholder="Dokąd (np. ulica, miasto)"
             onSelect={setEndCoords}
           />
+          <div className="datetime-wrapper">
+            <label htmlFor="departure-time">Data i czas wyjazdu</label>
+            <input
+              id="departure-time"
+              type="datetime-local"
+              value={departureDateTime}
+              onChange={(e) => setDepartureDateTime(e.target.value)}
+              required
+            />
+          </div>
           <button
             type="submit"
             disabled={isLoading || !startCoords || !endCoords || !selectedCar}
