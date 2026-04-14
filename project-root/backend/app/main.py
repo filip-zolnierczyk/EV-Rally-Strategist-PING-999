@@ -58,16 +58,20 @@ async def read_root():
 
 @app.post("/calculate_distance")
 async def calculate_distance(data: RouteRequest):
-    chargings, distance, time, coordinates = await solve(data.start, data.end, data.carId)
+    chargings, distance, time, coordinates, total_time = await solve(data.start, data.end, data.carId)
 
     lat_lng_coords = [(lat, lng) for lng, lat in coordinates]
     encoded_coords = polyline.encode(lat_lng_coords)
     
     return {
-        "chargings": chargings,
+        "chargings": chargings['cords'],
         "distance": distance,
         "time": time,
-        "coordinates": encoded_coords
+        "coordinates": encoded_coords,
+        "total_time": total_time,
+        "charging_time": chargings['times'],
+        "charger_info": chargings['charger_info'],
+        "plugs": chargings['plugs']
     }
 
 @app.get("/cars")

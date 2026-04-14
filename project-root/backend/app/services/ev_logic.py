@@ -25,7 +25,7 @@ def get_car_range_and_battery_capacity(carid):
     for vehicle in vehicles:
         if vehicle.get("id") == carid:
             battery_size, average_consumption = vehicle.get("usable_battery_size"), vehicle.get("energy_consumption", {}).get("average_consumption")
-            return battery_size / average_consumption * 100, battery_size  # przeliczamy na km, zakładając że average_consumption jest w kWh/100km
+            return battery_size / average_consumption * 100, battery_size, vehicle  # przeliczamy na km, zakładając że average_consumption jest w kWh/100km
 
 def can_vehicle_charge_with_connector(vehicle, connector):
     """
@@ -49,14 +49,14 @@ def can_vehicle_charge_with_connector(vehicle, connector):
             
         if target_key in supported_ports or target_key == "schuko": 
             # Schuko traktujemy jako 'zawsze kompatybilne' jeśli auto ma AC
-            return True, "AC"
+            return True, plug_id
     
     elif conn_type == "dc":
         supported_ports = vehicle.get("dc_charger", {}).get("ports", [])
         if target_key in supported_ports:
-            return True, "DC"
+            return True, plug_id
 
-    return False, ""
+    return False, plug_id
 
 def calculate_range(curr_range : float, temperature : Optional) -> float:
     if temperature is None:
