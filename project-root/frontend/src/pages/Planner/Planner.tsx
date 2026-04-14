@@ -11,10 +11,11 @@ export default function Planner() {
   const handlePlanRoute = async (
     startCoords: [number, number],
     endCoords: [number, number],
+    carId: string,
   ) => {
     setIsLoading(true);
     try {
-      const data = await calculateRoute(startCoords, endCoords);
+      const data = await calculateRoute(startCoords, endCoords, carId);
       setRouteData(data);
     } catch (error) {
       console.error(error);

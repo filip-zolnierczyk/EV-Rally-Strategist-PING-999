@@ -23,6 +23,7 @@ import polyline
 class RouteRequest(BaseModel):
     start: Tuple[float, float]
     end: Tuple[float, float]
+    carId: str
 
 
 app = FastAPI()
@@ -41,7 +42,7 @@ async def read_root():
 
 @app.post("/calculate_distance")
 async def calculate_distance(data: RouteRequest):
-    chargings, distance, time, coordinates = await solve(data.start, data.end)
+    chargings, distance, time, coordinates = await solve(data.start, data.end, data.carId)
 
     lat_lng_coords = [(lat, lng) for lng, lat in coordinates]
     encoded_coords = polyline.encode(lat_lng_coords)

@@ -1,21 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AutocompleteInput from "./AutocompleteInput";
+import { Car } from "../../types/Car";
+import { getCars } from "../../services/api";
 import "./Sidebar.css";
 
 interface SidebarProps {
   onPlanRoute: (
     startCoords: [number, number],
     endCoords: [number, number],
+    carId: string,
   ) => void;
   routeData: any;
   isLoading: boolean;
 }
-
-const MOCK_CARS = [
-  { id: 1, name: "Tesla Model 3", battery: "60 kWh", range: "491 km" },
-  { id: 2, name: "Tesla Model Y", battery: "75 kWh", range: "533 km" },
-  { id: 3, name: "BMW iX3", battery: "80 kWh", range: "460 km" },
-];
 
 export default function Sidebar({
   onPlanRoute,
@@ -24,12 +21,31 @@ export default function Sidebar({
 }: SidebarProps) {
   const [startCoords, setStartCoords] = useState<[number, number] | null>(null);
   const [endCoords, setEndCoords] = useState<[number, number] | null>(null);
-  const [selectedCar, setSelectedCar] = useState<number | null>(1);
+
+  const [cars, setCars] = useState<Car[]>([]);
+  const [selectedCar, setSelectedCar] = useState<string | null>(null);
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedBrand, setSelectedBrand] = useState("");
+  const [selectedYear, setSelectedYear] = useState("");
+
+  useEffect(() => {
+    const fetchCarsData = async () => {
+      try {
+        const data = await getCars();
+        setCars(data);
+      } catch (error) {
+        console.error("Error loading cars:", error);
+      }
+    };
+
+    fetchCarsData();
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (startCoords && endCoords) {
-      onPlanRoute(startCoords, endCoords);
+    if (startCoords && endCoords && selectedCar) {
+      onPlanRoute(startCoords, endCoords, selectedCar);
     } else {
       alert("Wybierz dokładny adres z listy podpowiedzi.");
     }
@@ -41,25 +57,82 @@ export default function Sidebar({
     return `${hrs}h ${mins}min`;
   };
 
+  const filteredCars = cars.filter((car) => {
+    const fullName = `${car.brand} ${car.model}`.toLowerCase();
+    const matchesSearch = fullName.includes(searchQuery.toLowerCase());
+    const matchesBrand = selectedBrand ? car.brand === selectedBrand : true;
+    const matchesYear = selectedYear
+      ? String(car.release_year) === selectedYear
+      : true;
+    return matchesSearch && matchesBrand && matchesYear;
+  });
+
+  const uniqueBrands = Array.from(new Set(cars.map((c) => c.brand))).sort();
+  const uniqueYears = Array.from(
+    new Set(cars.map((c) => c.release_year).filter(Boolean)),
+  ).sort();
+
   return (
     <div className="sidebar">
       <h2>EV Route Planner</h2>
 
       <section className="car-selection">
-        <h3>Wybierz pojazd (Mock)</h3>
+        <h3>Wybierz pojazd</h3>
+
+        <div className="filters">
+          <input
+            type="text"
+            placeholder="Szukaj auta..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <div className="filter-row">
+            <select
+              value={selectedBrand}
+              onChange={(e) => setSelectedBrand(e.target.value)}
+            >
+              <option value="">Wszystkie marki</option>
+              {uniqueBrands.map((brand) => (
+                <option key={brand} value={brand}>
+                  {brand}
+                </option>
+              ))}
+            </select>
+            <select
+              value={selectedYear}
+              onChange={(e) => setSelectedYear(e.target.value)}
+            >
+              <option value="">Wszystkie roczniki</option>
+              {uniqueYears.map((year) => (
+                <option key={year} value={String(year)}>
+                  {year}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
         <div className="car-list">
-          {MOCK_CARS.map((car) => (
+          {filteredCars.map((car) => (
             <div
               key={car.id}
               className={`car-card ${selectedCar === car.id ? "selected" : ""}`}
               onClick={() => setSelectedCar(car.id)}
             >
-              <div className="car-name">{car.name}</div>
+              <div className="car-name">
+                {car.brand} {car.model}
+              </div>
               <div className="car-specs">
-                {car.battery} • Zasięg: {car.range}
+                Bateria: {car.battery_capacity} kWh • Śr. zużycie:{" "}
+                {car.avg_consumption} kWh/100km
+                <br />
+                Rocznik: {car.release_year || "Brak danych"}
               </div>
             </div>
           ))}
+          {filteredCars.length === 0 && (
+            <div className="car-specs">Nie znaleziono pojazdów.</div>
+          )}
         </div>
       </section>
 
@@ -76,7 +149,8 @@ export default function Sidebar({
           />
           <button
             type="submit"
-            disabled={isLoading || !startCoords || !endCoords}
+            disabled={isLoading || !startCoords || !endCoords || !selectedCar}
+            title={!selectedCar ? "Wybierz najpierw pojazd" : ""}
           >
             {isLoading ? "Szukanie..." : "Wyznacz trasę"}
           </button>
