@@ -12,10 +12,16 @@ export default function Planner() {
     startCoords: [number, number],
     endCoords: [number, number],
     carId: string,
+    currDateTime: string,
   ) => {
     setIsLoading(true);
     try {
-      const data = await calculateRoute(startCoords, endCoords, carId);
+      const data = await calculateRoute(
+        startCoords,
+        endCoords,
+        carId,
+        currDateTime,
+      );
       setRouteData(data);
     } catch (error) {
       console.error(error);

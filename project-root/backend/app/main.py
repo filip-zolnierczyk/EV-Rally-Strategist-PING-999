@@ -32,8 +32,13 @@ class RouteRequest(BaseModel):
     )
     carId: str = Field(
         ..., 
-        example="c6a6bd26-6a8f-4ab7-baf3-6cfa057044e3",
+        json_schema_extra={"example": "c6a6bd26-6a8f-4ab7-baf3-6cfa057044e3"},        
         description="UUID wybranego pojazdu"
+    )
+    dateTime: str = Field(
+        ..., 
+        json_schema_extra={"example": "2026-04-14T20:15"},
+        description="Data i godzina wyjazdu w formacie ISO (YYYY-MM-DDTHH:mm)"    
     )
 
 

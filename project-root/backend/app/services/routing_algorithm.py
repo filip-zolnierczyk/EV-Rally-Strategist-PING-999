@@ -13,8 +13,7 @@ from ..services.ev_logic import *
 # RANGE oznacza nominalny zasięg pojazdu (km), BATTERY_CAPACITY to pojemność baterii (jednostka wg modelu domenowego).
 async def solve(start_point : Tuple[float, float], end_point : Tuple[float, float] , carId: str):
     RANGE, BATTERY_CAPACITY = 400, 100
-
-    # WZIĄĆ Z            carId
+    # WZIĄĆ Z carId
     
     # Pobranie bieżącej temperatury dla punktu startowego.
     temperature = await get_temperature_async(start_point[1], start_point[0], datetime.now())

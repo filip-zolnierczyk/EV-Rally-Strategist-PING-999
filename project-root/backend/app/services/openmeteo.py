@@ -44,7 +44,7 @@ async def get_temperature_async(latitude, longitude, target_datetime: datetime):
                 return None
 
         except Exception as e:
-            print(f"Błąd: {e}")
+            print(f"Błąd pogody: {e}")
             return None
 
 async def main():
