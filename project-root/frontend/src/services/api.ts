@@ -7,11 +7,12 @@ export const calculateRoute = async (
   end: [number, number],
   carId: string,
   dateTime: string,
+  chargingTo100: boolean = false,
 ) => {
   const response = await fetch(`${BASE_URL}/calculate_distance`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ start, end, carId, dateTime }),
+    body: JSON.stringify({ start, end, carId, dateTime, chargingTo100}),
   });
   if (!response.ok)
     throw new Error(`Network response was not ok: ${response.status}`);

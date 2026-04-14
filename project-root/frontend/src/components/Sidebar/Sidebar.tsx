@@ -6,11 +6,11 @@ import "./Sidebar.css";
 
 interface SidebarProps {
   onPlanRoute: (
-    startCoords: [number, number],
-    endCoords: [number, number],
-    carId: string,
-    departureDateTime: string,
-  ) => void;
+      startCoords: [number, number],
+      endCoords: [number, number],
+      carId: string,
+      departureDateTime: string,
+      chargingTo100: boolean) => void;
   routeData: any;
   isLoading: boolean;
 }
@@ -48,10 +48,11 @@ export default function Sidebar({
     fetchCarsData();
   }, []);
 
+  const [chargingTo100, setChargingTo100] = useState(false);
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (startCoords && endCoords && selectedCar) {
-      onPlanRoute(startCoords, endCoords, selectedCar, departureDateTime);
+      onPlanRoute(startCoords, endCoords, selectedCar, departureDateTime, chargingTo100);
     } else {
       alert("Wybierz dokładny adres z listy podpowiedzi.");
     }
@@ -172,6 +173,17 @@ export default function Sidebar({
               onChange={(e) => setDepartureDateTime(e.target.value)}
               required
             />
+          </div>
+          <div className="charging-option">
+            <label htmlFor="charging-toggle" className="toggle-label">
+              <input
+                id="charging-toggle"
+                type="checkbox"
+                checked={chargingTo100}
+                onChange={(e) => setChargingTo100(e.target.checked)}
+              />
+              <span>Ładować do 100% (domyślnie 80%)</span>
+            </label>
           </div>
           <button
             type="submit"

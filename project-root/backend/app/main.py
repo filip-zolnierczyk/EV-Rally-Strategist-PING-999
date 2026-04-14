@@ -40,6 +40,10 @@ class RouteRequest(BaseModel):
         json_schema_extra={"example": "2026-04-14T20:15"},
         description="Data i godzina wyjazdu w formacie ISO (YYYY-MM-DDTHH:mm)"    
     )
+    charging_to_100: bool = Field(
+        default=False,
+        description="Czy ładować do 100% czy do 80%"
+    )
 
 
 app = FastAPI()
@@ -58,7 +62,7 @@ async def read_root():
 
 @app.post("/calculate_distance")
 async def calculate_distance(data: RouteRequest):
-    chargings, distance, time, coordinates, total_time = await solve(data.start, data.end, data.carId)
+    chargings, distance, time, coordinates, total_time = await solve(data.start, data.end, data.carId, charging_to_100=data.charging_to_100)
 
     lat_lng_coords = [(lat, lng) for lng, lat in coordinates]
     encoded_coords = polyline.encode(lat_lng_coords)

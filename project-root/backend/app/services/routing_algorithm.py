@@ -16,14 +16,14 @@ async def solve(
         start_point : Tuple[float, float],
         end_point : Tuple[float, float] ,
         carId: str,
-        date=datetime.now(),
+        dateTime=datetime.now(),
         charging_to_100=False #
 ):
     charging_cap = 1.0 if charging_to_100 else 0.8
     RANGE, BATTERY_CAPACITY, vehicle = get_car_range_and_battery_capacity(carId)
 
     #Pobranie aktualnego czasu
-    now = date - timedelta(days=7) # odejmujemy dzień, aby mieć pewność że pogoda będzie dostępna w archiwum Open Meteo
+    now = dateTime - timedelta(days=7) # odejmujemy dzień, aby mieć pewność że pogoda będzie dostępna w archiwum Open Meteo
     print(now)
 
     # Pobranie bieżącej temperatury dla punktu startowego.

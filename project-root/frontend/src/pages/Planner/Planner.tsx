@@ -13,6 +13,7 @@ export default function Planner() {
     endCoords: [number, number],
     carId: string,
     currDateTime: string,
+    chargingTo100: boolean,
   ) => {
     setIsLoading(true);
     try {
@@ -21,6 +22,7 @@ export default function Planner() {
         endCoords,
         carId,
         currDateTime,
+        chargingTo100,
       );
       setRouteData(data);
     } catch (error) {
