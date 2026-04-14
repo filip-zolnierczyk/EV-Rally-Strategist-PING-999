@@ -16,8 +16,14 @@ from ..services.ev_logic import *
 async def solve(start_point : Tuple[float, float], end_point : Tuple[float, float] , carId: str):
     RANGE, BATTERY_CAPACITY = get_car_range_and_battery_capacity(carId)
     
+    #Pobranie aktualnego czasu
+    now = datetime.now() - timedelta(days=7) # odejmujemy dzień, aby mieć pewność że pogoda będzie dostępna w archiwum Open Meteo
+    print(now)
+
     # Pobranie bieżącej temperatury dla punktu startowego.
-    temperature = await get_temperature_async(start_point[1], start_point[0], datetime.now())
+    print(start_point[1], start_point[0], datetime(now.year, now.month, now.day, now.hour, now.minute))
+    now = datetime(now.year, now.month, now.day, now.hour, now.minute)
+    temperature = await get_temperature_async(start_point[1], start_point[0], now)
     # Wyznaczenie efektywnego zasięgu.
     curr_range = calculate_range(RANGE, temperature)
 
@@ -32,8 +38,8 @@ async def solve(start_point : Tuple[float, float], end_point : Tuple[float, floa
     while dist >= curr_range:
         # Wyznaczenie punktów w okolicach 80% i 85% odcinka obecnej trasy,
         # aby szukać ładowarek „przed końcem dostępnego zasięgu”.
-        b_lon, b_lat = coordinates[int(((RANGE*0.8)/dist * len(coordinates))*0.80)]
-        c_lon, c_lat = coordinates[int(((RANGE*0.8)/dist * len(coordinates))*0.85)]
+        b_lon, b_lat = coordinates[int((curr_range/dist * len(coordinates))*0.80)]
+        c_lon, c_lat = coordinates[int((curr_range/dist * len(coordinates))*0.85)]
 
         # Używamy zbioru, aby automatycznie usuwać duplikaty stacji.
         charger_cord_set = set()
@@ -83,7 +89,7 @@ async def solve(start_point : Tuple[float, float], end_point : Tuple[float, floa
 
             # Pobranie prognozy temperatury na moment dotarcia do tej stacji
             # i przeliczenie zasięgu po ładowaniu do 80%.
-            temperature = await get_temperature_async(charging_cords[1], charging_cords[0], datetime.now() + timedelta(minutes=min_time))
+            temperature = await get_temperature_async(charging_cords[1], charging_cords[0], now + timedelta(minutes=min_time))
             curr_range = calculate_range(0.8*RANGE, temperature)
         else:
             raise Exception(f"Could not find a charger on the route")
