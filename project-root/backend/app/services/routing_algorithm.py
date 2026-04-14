@@ -5,53 +5,18 @@ from ..services.openmeteo import *
 from math import inf
 import asyncio
 from datetime import datetime, timedelta
+from ev_logic import *
 
-def calculate_charging_time(battery_capacity: float, charger_param=0, start_value:float=0.15, goal_value:float=0.8) -> float:
-    if not (0 <= start_value < goal_value <= 1):
-        raise ValueError("start_value and goal_value must be in [0,1] and start < goal")
-
-    if charger_param <= 0:
-        raise ValueError("charger_param must be positive (kW)")
-
-    energy_needed = battery_capacity * (goal_value - start_value)  # kWh
-    time_min = 60 * energy_needed / charger_param
-
-    return time_min
-
-def calculate_range(curr_range : float, temperature : Optional) -> float:
-    if temperature is None:
-        # może się zdarzyć żę temperatura będzie None
-        return curr_range
-
-    # Przykładowa propozycja copilota dla prostej heury:
-
-    optimal_temp = 20.0  # best efficiency around 20°C
-
-    # how strongly temperature affects range
-    penalty = 0.02
-
-    delta = abs(temperature['temp'] - optimal_temp)
-
-    # linear degradation
-    factor = 1.0 - penalty * delta
-
-    # clamp to avoid unrealistic values
-    if factor < 0.6:
-        factor = 0.6
-    if factor > 1.05:
-        factor = 1.05
-
-    return curr_range * factor
 
 
 
 # Główna funkcja algorytmu wyznaczania trasy z postojami na ładowanie.
 # start_point / end_point są w formacie (lon, lat).
 # RANGE oznacza nominalny zasięg pojazdu (km), BATTERY_CAPACITY to pojemność baterii (jednostka wg modelu domenowego).
-async def solve(start_point : Tuple[float, float], end_point : Tuple[float, float] , RANGE=450, BATTERY_CAPACITY=1000):
+async def solve(start_point : Tuple[float, float], end_point : Tuple[float, float] , RANGE=450, BATTERY_CAPACITY=80):
     # Pobranie bieżącej temperatury dla punktu startowego.
     temperature = await get_temperature_async(start_point[1], start_point[0], datetime.now())
-    # Wyznaczenie efektywnego zasięgu (obecnie bez realnej korekty, bo calculate_range to TODO).
+    # Wyznaczenie efektywnego zasięgu.
     curr_range = calculate_range(RANGE, temperature)
 
     # Struktura przechowująca:
@@ -110,7 +75,7 @@ async def solve(start_point : Tuple[float, float], end_point : Tuple[float, floa
             # Aktualizacja „stanu baterii” w uproszczonym modelu.
             curr_range -= best_l
 
-            # Wyznaczenie czasu ładowania dla aktualnego postoju (obecnie 0.0, bo TODO).
+            # Wyznaczenie czasu ładowania dla aktualnego postoju.
             charging_time = calculate_charging_time(BATTERY_CAPACITY, start_value=curr_range/RANGE)
             chargings['times'].append(charging_time)
 
