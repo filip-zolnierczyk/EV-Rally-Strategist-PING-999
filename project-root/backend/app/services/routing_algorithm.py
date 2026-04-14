@@ -7,11 +7,18 @@ import asyncio
 from datetime import datetime, timedelta
 
 def calculate_charging_time(battery_capacity: float, charger_param=0, start_value:float=0.15, goal_value:float=0.8) -> float:
-    # TODO
-    return 0.0
+    if not (0 <= start_value < goal_value <= 1):
+        raise ValueError("start_value and goal_value must be in [0,1] and start < goal")
+
+    if charger_param <= 0:
+        raise ValueError("charger_param must be positive (kW)")
+
+    energy_needed = battery_capacity * (goal_value - start_value)  # kWh
+    time_min = 60 * energy_needed / charger_param
+
+    return time_min
 
 def calculate_range(curr_range : float, temperature : Optional) -> float:
-    # TODO
     if temperature is None:
         # może się zdarzyć żę temperatura będzie None
         return curr_range
