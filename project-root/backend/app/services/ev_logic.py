@@ -1,21 +1,23 @@
 import json
 from pathlib import Path
+from typing import Optional
 
 # Słownik mapowania: Plug_ID z OpenChargeMap -> Klucze w Open-EV-Data
 # Uwzględniamy podział na AC (prąd zmienny) i DC (prąd stały)
 PLUG_MAPPING = {
     # AC - Prąd zmienny
-    25: {"type": "ac", "key": "type2"},      # Type 2 (Socket Only)
-    1036: {"type": "ac", "key": "type2"},    # Type 2 (Tethered Connector)
-    28: {"type": "ac", "key": "schuko"},     # CEE 7/4 - Schuko - Type F
-    30: {"type": "ac", "key": "tesla"},      # Tesla (Model S/X) - zazwyczaj Type 2 modyfikowany
-    1: {"type": "ac", "key": "type1"},       # Type 1 (J1772)
+    25: {"type": "ac", "key": "type2", "charger_power_kw": 11.0},      # Type 2 (Socket Only)
+    1036: {"type": "ac", "key": "type2", "charger_power_kw": 11.0},    # Type 2 (Tethered Connector)
+    28: {"type": "ac", "key": "schuko", "charger_power_kw": 2.3},     # CEE 7/4 - Schuko - Type F
+    30: {"type": "ac", "key": "tesla", "charger_power_kw": 11.0},      # Tesla (Model S/X) - zazwyczaj Type 2 modyfikowany
+    1: {"type": "ac", "key": "type1", "charger_power_kw": 7.4},       # Type 1 (J1772)
 
     # DC - Prąd stały (Szybkie ładowanie)
-    33: {"type": "dc", "key": "ccs"},        # CCS (Type 2)
-    2: {"type": "dc", "key": "chademo"},     # CHAdeMO
-    27: {"type": "dc", "key": "tesla"},      # Tesla Supercharger
+    33: {"type": "dc", "key": "ccs", "charger_power_kw": 150.0},        # CCS (Type 2)
+    2: {"type": "dc", "key": "chademo", "charger_power_kw": 50.0},     # CHAdeMO
+    27: {"type": "dc", "key": "tesla", "charger_power_kw": 250.0},      # Tesla Supercharger
 }
+
 
 def can_vehicle_charge_with_connector(vehicle, connector):
     """
@@ -47,6 +49,118 @@ def can_vehicle_charge_with_connector(vehicle, connector):
             return True, "DC"
 
     return False, ""
+
+def calculate_range(curr_range : float, temperature : Optional) -> float:
+    if temperature is None:
+        # może się zdarzyć żę temperatura będzie None
+        return curr_range
+
+    optimal_temp = 20.0  # best efficiency around 20°C
+
+    # how strongly temperature affects range
+    penalty = 0.02
+
+    delta = abs(temperature['temp'] - optimal_temp)
+
+    # linear degradation
+    factor = 1.0 - penalty * delta
+
+    # clamp to avoid unrealistic values
+    if factor < 0.6:
+        factor = 0.6
+    if factor > 1.05:
+        factor = 1.05
+
+    return curr_range * factor
+
+def calculate_charging_time(
+        battery_capacity: float,
+        plug_id: int,
+        start_value:float=0.15,
+        goal_value:float=0.8
+) -> float:
+    if PLUG_MAPPING.get(plug_id) is None:
+        raise Exception(f"Plug id {plug_id} is not supported")
+
+    if PLUG_MAPPING[plug_id]["type"] == "ac":
+        return calculate_charging_time_ac(battery_capacity, PLUG_MAPPING[plug_id]['charger_power_kw'], start_value, goal_value)
+    elif PLUG_MAPPING[plug_id]["type"] == "dc":
+        return calculate_charging_time_dc(battery_capacity, PLUG_MAPPING[plug_id]['charger_power_kw'], start_value, goal_value)
+
+    raise Exception(f"Plug id {plug_id} is not supported")
+
+
+def calculate_charging_time_ac(
+        battery_capacity: float,
+        charger_param: float = 11.0,
+        start_value:float=0.15,
+        goal_value:float=0.8
+) -> float:
+    """
+    Estimate AC charging time in minutes.
+    """
+
+    if not (0 <= start_value < goal_value <= 1):
+        raise ValueError("start_value and goal_value must be in [0,1] and start < goal")
+
+    fast_end = min(goal_value, 0.8)
+
+    fast_energy = battery_capacity * max(0.0, fast_end - start_value)
+    slow_energy = battery_capacity * max(0.0, goal_value - 0.8)
+
+    fast_time = fast_energy / charger_param
+    slow_time = slow_energy / (charger_param * 0.5)  # slower phase
+
+    return fast_time + slow_time
+
+def calculate_charging_time_dc(
+    battery_capacity: float,
+    charger_power_kw: float,
+    start_value: float = 0.10,
+    goal_value: float = 0.80,
+    vehicle_max_dc_kw: float = 170.0,
+) -> float:
+    """
+    Estimate DC charging time in minutes.
+    """
+
+    if battery_capacity <= 0:
+        raise ValueError("battery_capacity must be > 0")
+    if charger_power_kw <= 0:
+        raise ValueError("charger_power_kw must be > 0")
+    if vehicle_max_dc_kw <= 0:
+        raise ValueError("vehicle_max_dc_kw must be > 0")
+    if not (0 <= start_value < goal_value <= 1):
+        raise ValueError("start_value and goal_value must be in [0,1] and start < goal")
+
+    available_power = min(charger_power_kw, vehicle_max_dc_kw)
+
+    # (soc_start, soc_end, power_multiplier)
+    bands = [
+        (0.00, 0.20, 0.90),
+        (0.20, 0.40, 0.85),
+        (0.40, 0.60, 0.70),
+        (0.60, 0.80, 0.55),
+        (0.80, 0.90, 0.35),
+        (0.90, 1.00, 0.20),
+    ]
+
+    total_minutes = 0.0
+
+    for band_start, band_end, multiplier in bands:
+        overlap_start = max(start_value, band_start)
+        overlap_end = min(goal_value, band_end)
+
+        if overlap_end <= overlap_start:
+            continue
+
+        energy_kwh = battery_capacity * (overlap_end - overlap_start)
+        effective_power_kw = available_power * multiplier
+
+        # hours = kWh / kW  -> minutes = hours * 60
+        total_minutes += (energy_kwh / effective_power_kw) * 60
+
+    return total_minutes
 
 
 def can_vehicle_charge_with_connector(vehicle, connector):

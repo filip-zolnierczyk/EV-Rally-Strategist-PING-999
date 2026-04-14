@@ -13,7 +13,6 @@ Uruchamianie za pomocą dockera:
 from typing import Tuple
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .services.osrm import calculate_with_given_coordinates
 from pydantic import BaseModel
 from .services.routing_algorithm import solve
 from .services.ev_logic import get_cars as get_list_of_cars
