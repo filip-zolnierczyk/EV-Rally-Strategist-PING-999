@@ -19,6 +19,14 @@ PLUG_MAPPING = {
 }
 
 
+def get_car_range_and_battery_capacity(carid):
+    with open("app/data/ev-data.json", "r", encoding="utf-8") as f:
+        vehicles = json.load(f)
+    for vehicle in vehicles:
+        if vehicle.get("id") == carid:
+            battery_size, average_consumption = vehicle.get("usable_battery_size"), vehicle.get("energy_consumption", {}).get("average_consumption")
+            return battery_size / average_consumption * 100, battery_size  # przeliczamy na km, zakładając że average_consumption jest w kWh/100km
+
 def can_vehicle_charge_with_connector(vehicle, connector):
     """
     Funkcja przyjmuje dane samochodu i dane ładowarki (dokładnie, pojedynczy connector z parametru connectors) i sprawdza, czy są kompatybilne.
