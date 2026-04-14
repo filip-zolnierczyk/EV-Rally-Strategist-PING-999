@@ -13,14 +13,12 @@ from ..services.ev_logic import *
 # Główna funkcja algorytmu wyznaczania trasy z postojami na ładowanie.
 # start_point / end_point są w formacie (lon, lat).
 # RANGE oznacza nominalny zasięg pojazdu (km), BATTERY_CAPACITY to pojemność baterii (jednostka wg modelu domenowego).
-async def solve(start_point : Tuple[float, float], end_point : Tuple[float, float] , carId: str):
-<<<<<<< HEAD
+async def solve(
+        start_point : Tuple[float, float],
+        end_point : Tuple[float, float] ,
+        carId: str):
     RANGE, BATTERY_CAPACITY = get_car_range_and_battery_capacity(carId)
-=======
-    RANGE, BATTERY_CAPACITY = 400, 100
-    # WZIĄĆ Z carId
->>>>>>> frontend
-    
+
     #Pobranie aktualnego czasu
     now = datetime.now() - timedelta(days=7) # odejmujemy dzień, aby mieć pewność że pogoda będzie dostępna w archiwum Open Meteo
     print(now)
