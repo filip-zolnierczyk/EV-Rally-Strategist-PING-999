@@ -1,0 +1,32 @@
+[
+  {
+    "id": "tesla-model-3",
+    "brand": "Tesla",
+    "model": "Model 3",
+    "release_year": 2023,
+    "usable_battery_size": 57.5,
+    "energy_consumption": {
+      "average_consumption": 14.3
+    }
+  },
+  {
+    "id": "tesla-model-y",
+    "brand": "Tesla",
+    "model": "Model Y",
+    "release_year": 2023,
+    "usable_battery_size": 75.0,
+    "energy_consumption": {
+      "average_consumption": 16.8
+    }
+  },
+  {
+    "id": "bmw-ix3",
+    "brand": "BMW",
+    "model": "iX3",
+    "release_year": 2022,
+    "usable_battery_size": 74.0,
+    "energy_consumption": {
+      "average_consumption": 18.5
+    }
+  }
+]
