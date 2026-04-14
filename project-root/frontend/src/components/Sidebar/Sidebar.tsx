@@ -78,6 +78,16 @@ export default function Sidebar({
     new Set(cars.map((c) => c.release_year).filter(Boolean)),
   ).sort();
 
+  // Helper function to get charger name from charger_info
+  const getChargerName = (chargerInfo: any): string => {
+    if (!chargerInfo) return "Nieznana stacja";
+    // Try various possible name fields from the API response
+    return chargerInfo.name ||
+           chargerInfo.title ||
+           chargerInfo.station_name ||
+           "Nieznana stacja";
+  };
+
   return (
     <div className="sidebar">
       <h2>EV Route Planner</h2>
@@ -183,23 +193,41 @@ export default function Sidebar({
             <div>
               Czas jazdy: <strong>{formatTime(routeData.time)}</strong>
             </div>
+            <div>
+              Łączny czas: <strong>{formatTime(routeData.total_time)}</strong>
+            </div>
           </div>
 
           <h3>Stacje ładowania ({routeData.chargings.length})</h3>
           <div className="charging-list">
             {routeData.chargings.map(
-              (station: [number, number], index: number) => (
-                <div key={index} className="charging-stop">
-                  <div className="stop-number">{index + 1}</div>
-                  <div className="stop-details">
-                    <div>Ładowarka {index + 1}</div>
-                    <div className="coords">
-                      Współrzędne: {station[1].toFixed(4)},{" "}
-                      {station[0].toFixed(4)}
+              (station: [number, number], index: number) => {
+                const chargerInfo = routeData.charger_info?.[index];
+                const chargerName = getChargerName(chargerInfo);
+
+                return (
+                  <div key={index} className="charging-stop">
+                    <div className="stop-number">{index + 1}</div>
+                    <div className="stop-details">
+                      <div className="charger-name">{chargerName}</div>
+                      <div className="coords">
+                        Współrzędne: {station[1].toFixed(4)},{" "}
+                        {station[0].toFixed(4)}
+                      </div>
+                      {routeData.charging_time?.[index] && (
+                        <div className="charging-duration">
+                          Czas ładowania: {formatTime(routeData.charging_time[index])}
+                        </div>
+                      )}
+                      {routeData.plugs?.[index] && (
+                        <div className="plug-type">
+                          {routeData.plugs[index].plug_name || "Nieznany typ złącza"}
+                        </div>
+                      )}
                     </div>
                   </div>
-                </div>
-              ),
+                );
+              },
             )}
           </div>
         </section>

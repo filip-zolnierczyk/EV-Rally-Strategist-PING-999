@@ -6,16 +6,16 @@ from typing import Optional
 # Uwzględniamy podział na AC (prąd zmienny) i DC (prąd stały)
 PLUG_MAPPING = {
     # AC - Prąd zmienny
-    25: {"type": "ac", "key": "type2", "charger_power_kw": 11.0},      # Type 2 (Socket Only)
-    1036: {"type": "ac", "key": "type2", "charger_power_kw": 11.0},    # Type 2 (Tethered Connector)
-    28: {"type": "ac", "key": "schuko", "charger_power_kw": 2.3},     # CEE 7/4 - Schuko - Type F
-    30: {"type": "ac", "key": "tesla", "charger_power_kw": 11.0},      # Tesla (Model S/X) - zazwyczaj Type 2 modyfikowany
-    1: {"type": "ac", "key": "type1", "charger_power_kw": 7.4},       # Type 1 (J1772)
+    25: {"type": "ac", "key": "type2", "charger_power_kw": 11.0, "plug_name": "Type 2 (Socket Only)"},      # Type 2 (Socket Only)
+    1036: {"type": "ac", "key": "type2", "charger_power_kw": 11.0, "plug_name": "Type 2 (Tethered Connector)"},    # Type 2 (Tethered Connector)
+    28: {"type": "ac", "key": "schuko", "charger_power_kw": 2.3, "plug_name": "CEE 7/4 - Schuko - Type F"},     # CEE 7/4 - Schuko - Type F
+    30: {"type": "ac", "key": "tesla", "charger_power_kw": 11.0, "plug_name": "Tesla (Model S/X)"},      # Tesla (Model S/X) - zazwyczaj Type 2 modyfikowany
+    1: {"type": "ac", "key": "type1", "charger_power_kw": 7.4, "plug_name": "Type 1 (J1772)"},       # Type 1 (J1772)
 
     # DC - Prąd stały (Szybkie ładowanie)
-    33: {"type": "dc", "key": "ccs", "charger_power_kw": 150.0},        # CCS (Type 2)
-    2: {"type": "dc", "key": "chademo", "charger_power_kw": 50.0},     # CHAdeMO
-    27: {"type": "dc", "key": "tesla", "charger_power_kw": 250.0},      # Tesla Supercharger
+    33: {"type": "dc", "key": "ccs", "charger_power_kw": 150.0, "plug_name": "CCS (Type 2)"},        # CCS (Type 2)
+    2: {"type": "dc", "key": "chademo", "charger_power_kw": 50.0, "plug_name": "CHAdeMO"},     # CHAdeMO
+    27: {"type": "dc", "key": "tesla", "charger_power_kw": 250.0, "plug_name": "Tesla Supercharger"},      # Tesla Supercharger
 }
 
 
