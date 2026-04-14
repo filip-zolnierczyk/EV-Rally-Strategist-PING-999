@@ -10,19 +10,31 @@ Uruchamianie za pomocą dockera:
 '''
 
 
-from typing import Tuple
+from typing import Tuple, List
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from .services.routing_algorithm import solve
 from .services.ev_logic import get_cars as get_list_of_cars
 import asyncio
 import polyline
 
 class RouteRequest(BaseModel):
-    start: Tuple[float, float]
-    end: Tuple[float, float]
-    carId: str
+    start: List[float] = Field(
+        ..., 
+        json_schema_extra={"example": [18.6466, 54.3520]},
+        description="Współrzędne startowe (Gdańsk) [lng, lat]"
+    )
+    end: List[float] = Field(
+        ..., 
+        json_schema_extra={"example": [14.4378, 50.0755]},
+        description="Współrzędne docelowe (Praga) [lng, lat]"
+    )
+    carId: str = Field(
+        ..., 
+        example="c6a6bd26-6a8f-4ab7-baf3-6cfa057044e3",
+        description="UUID wybranego pojazdu"
+    )
 
 
 app = FastAPI()
