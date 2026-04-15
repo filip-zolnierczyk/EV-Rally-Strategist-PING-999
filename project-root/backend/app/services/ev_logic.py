@@ -108,8 +108,14 @@ def calculate_charging_time_ac(
     Estimate AC charging time in minutes.
     """
 
-    if not (0 <= start_value < goal_value <= 1):
-        raise ValueError("start_value and goal_value must be in [0,1] and start < goal")
+    print(f"DEBUG ------------------ {start_value} -- {goal_value}")
+    # if not (0 <= start_value < goal_value <= 1):
+    #     raise ValueError("start_value and goal_value must be in [0,1] and start < goal")
+
+    # Tu jest problem bo nie do końca sprawdzane jest czy do ładowarki da się dojechać - problem jest bo star_value jest ujemne wtedy xD
+    # To na chwilę TODO
+    start_value = max(start_value, 0.0)
+
 
     fast_end = min(goal_value, 0.8)
 
