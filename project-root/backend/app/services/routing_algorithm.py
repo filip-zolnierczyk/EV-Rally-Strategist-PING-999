@@ -118,7 +118,10 @@ async def solve(
     # print(f" DEBUG: {chargings['times']}")
     # Zwracamy: listę stacji ładowania, dystans, czas, geometrię trasy, ew czasy każdego ładowania
     total_time = time + sum(chargings['times'])
-    cost = await calculate_electricity_cost(chargings['cords'], vehicle.get("energy_consumption").get("average_consumption"), dist)
+    if chargings['cords']:
+        cost = await calculate_electricity_cost(chargings['cords'], vehicle.get("energy_consumption").get("average_consumption"), dist)
+    else:
+        cost = await calculate_electricity_cost([start_point], vehicle.get("energy_consumption").get("average_consumption"), dist)
     return chargings, dist, time, coordinates, total_time, cost
 
 
