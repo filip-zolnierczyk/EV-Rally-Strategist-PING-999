@@ -26,14 +26,16 @@ async def get_electricity_price(lat: float, lon: float) -> float:
 
 
 async def get_mean_electricity_price(waypoints) -> float:
+    # idk
+    CHARGER_TAX = 1.5
     price = 0
     for waypoint in waypoints:
         lon, lat = waypoint
         price += await get_electricity_price(lat, lon)
 
-    return price / len(waypoints)
+    return price / len(waypoints) * CHARGER_TAX
 
 
-async def calculate_electricity_cost(waypoints, avg_consumption) -> float:
+async def calculate_electricity_cost(waypoints, avg_consumption, distance_km) -> float:
     price = await get_mean_electricity_price(waypoints)
-    return price * avg_consumption
+    return price * (avg_consumption / 100) * distance_km

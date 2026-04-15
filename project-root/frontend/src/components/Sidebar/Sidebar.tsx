@@ -63,7 +63,9 @@ export default function Sidebar({
     const mins = Math.round(minutes % 60);
     return `${hrs}h ${mins}min`;
   };
-
+  const formatCost = (cost: number): string => {
+    return cost.toFixed(2) + " EUR";
+  };
   const filteredCars = cars.filter((car) => {
     const fullName = `${car.brand} ${car.model}`.toLowerCase();
     const matchesSearch = fullName.includes(searchQuery.toLowerCase());
@@ -208,6 +210,11 @@ export default function Sidebar({
             <div>
               Łączny czas: <strong>{formatTime(routeData.total_time)}</strong>
             </div>
+            {routeData.cost !== undefined && (
+              <div className="cost-info">
+                Szacowany koszt energii: <strong className="cost-value">{formatCost(routeData.cost)}</strong>
+              </div>
+            )}
           </div>
 
           <h3>Stacje ładowania ({routeData.chargings.length})</h3>

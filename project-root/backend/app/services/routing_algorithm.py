@@ -56,7 +56,7 @@ async def solve(
         stations = await get_charging_stations_async_max_result_(b_lat, b_lon, max_result=3)
         stations += await get_charging_stations_async_max_result_(c_lat, c_lon, max_result=3)
         for station in stations:
-            if station['lat_lon'] is not None and convert_to_lonlat(tuple(station['lat_lon'])) not in charger_cord_set:
+            if 'lat_lon' in station and station['lat_lon'] is not None and convert_to_lonlat(tuple(station['lat_lon'])) not in charger_cord_set:
                 station['lon_lat'] = convert_to_lonlat(tuple(station['lat_lon']))
                 charger_cord_set.append(station['lon_lat'])
                 candidate_stations.append(station)
@@ -118,7 +118,7 @@ async def solve(
     # print(f" DEBUG: {chargings['times']}")
     # Zwracamy: listę stacji ładowania, dystans, czas, geometrię trasy, ew czasy każdego ładowania
     total_time = time + sum(chargings['times'])
-    cost = await calculate_electricity_cost(chargings['cords'], vehicle.get("energy_consumption").get("average_consumption"))
+    cost = await calculate_electricity_cost(chargings['cords'], vehicle.get("energy_consumption").get("average_consumption"), dist)
     return chargings, dist, time, coordinates, total_time, cost
 
 
