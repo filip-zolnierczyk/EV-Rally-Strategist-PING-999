@@ -6,6 +6,7 @@ from math import inf
 import asyncio
 from datetime import datetime, timedelta
 from ..services.ev_logic import *
+from ..services.fuel_cost import *
 
 
 
@@ -117,7 +118,8 @@ async def solve(
     # print(f" DEBUG: {chargings['times']}")
     # Zwracamy: listę stacji ładowania, dystans, czas, geometrię trasy, ew czasy każdego ładowania
     total_time = time + sum(chargings['times'])
-    return chargings, dist, time, coordinates, total_time
+    cost = await calculate_electricity_cost(chargings['cords'], vehicle.get("energy_consumption").get("average_consumption"))
+    return chargings, dist, time, coordinates, total_time, cost
 
 
 
