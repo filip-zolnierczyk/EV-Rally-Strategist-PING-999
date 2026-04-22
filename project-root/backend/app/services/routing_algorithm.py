@@ -8,7 +8,19 @@ from datetime import datetime, timedelta
 from ..services.ev_logic import *
 from ..services.fuel_cost import *
 
+PLUG_MAPPING = {
+    # AC - Prąd zmienny
+    25: {"type": "ac", "key": "type2", "charger_power_kw": 11.0, "plug_name": "Type 2 (Socket Only)"},      # Type 2 (Socket Only)
+    1036: {"type": "ac", "key": "type2", "charger_power_kw": 11.0, "plug_name": "Type 2 (Tethered Connector)"},    # Type 2 (Tethered Connector)
+    28: {"type": "ac", "key": "schuko", "charger_power_kw": 2.3, "plug_name": "CEE 7/4 - Schuko - Type F"},     # CEE 7/4 - Schuko - Type F
+    30: {"type": "ac", "key": "tesla", "charger_power_kw": 11.0, "plug_name": "Tesla (Model S/X)"},      # Tesla (Model S/X) - zazwyczaj Type 2 modyfikowany
+    1: {"type": "ac", "key": "type1", "charger_power_kw": 7.4, "plug_name": "Type 1 (J1772)"},       # Type 1 (J1772)
 
+    # DC - Prąd stały (Szybkie ładowanie)
+    33: {"type": "dc", "key": "ccs", "charger_power_kw": 150.0, "plug_name": "CCS (Type 2)"},        # CCS (Type 2)
+    2: {"type": "dc", "key": "chademo", "charger_power_kw": 50.0, "plug_name": "CHAdeMO"},     # CHAdeMO
+    27: {"type": "dc", "key": "tesla", "charger_power_kw": 250.0, "plug_name": "Tesla Supercharger"},      # Tesla Supercharger
+}
 
 # Główna funkcja algorytmu wyznaczania trasy z postojami na ładowanie.
 # start_point / end_point są w formacie (lon, lat).
@@ -98,8 +110,8 @@ async def solve(
             best_plug_id = 28
             for connector in candidate_stations[best_i]['connectors']:
                 res, plug_id = can_vehicle_charge_with_connector(vehicle, connector)
-                if res and PLUG_MAPPING[plug_id]['charger_power_kw'] > PLUG_MAPPING[best_plug_id]['charger_power_kw']:
-                    best_plug_id = plug_id
+                if res and PLUG_MAPPING[25]['charger_power_kw'] > PLUG_MAPPING[best_plug_id]['charger_power_kw']:
+                    best_plug_id = 28
 
             charging_time = calculate_charging_time(BATTERY_CAPACITY, plug_id=best_plug_id, start_value=curr_range/RANGE, goal_value=charging_cap)
             chargings['times'].append(charging_time)
