@@ -36,7 +36,7 @@ def can_vehicle_charge_with_connector(vehicle, connector):
     # 1. Sprawdź czy mamy ten typ wtyczki w słowniku
     mapping = PLUG_MAPPING.get(plug_id)
     if not mapping:
-        return False, "Nieznany typ wtyczki"
+        return False, "Nieznany typ wtyczki", 0
 
     target_key = mapping["key"]
     conn_type = mapping["type"] # 'ac' lub 'dc'
@@ -49,14 +49,14 @@ def can_vehicle_charge_with_connector(vehicle, connector):
             
         if target_key in supported_ports or target_key == "schuko": 
             # Schuko traktujemy jako 'zawsze kompatybilne' jeśli auto ma AC
-            return True, plug_id
+            return True, plug_id, mapping['charger_power_kw']
     
     elif conn_type == "dc":
         supported_ports = vehicle.get("dc_charger", {}).get("ports", [])
         if target_key in supported_ports:
-            return True, plug_id
+            return True, plug_id, mapping['charger_power_kw']
 
-    return False, plug_id
+    return False, plug_id, 0
 
 def calculate_range(curr_range : float, temperature : Optional) -> float:
     if temperature is None:
@@ -121,9 +121,8 @@ def calculate_charging_time_ac(
 
     fast_energy = battery_capacity * max(0.0, fast_end - start_value)
     slow_energy = battery_capacity * max(0.0, goal_value - 0.8)
-
-    fast_time = fast_energy / charger_param
-    slow_time = slow_energy / (charger_param * 0.5)  # slower phase
+    fast_time = fast_energy / charger_param * 60
+    slow_time = slow_energy / (charger_param * 0.5) * 60  # slower phase
 
     return fast_time + slow_time
 
@@ -153,10 +152,10 @@ def calculate_charging_time_dc(
     bands = [
         (0.00, 0.20, 0.90),
         (0.20, 0.40, 0.85),
-        (0.40, 0.60, 0.70),
-        (0.60, 0.80, 0.55),
-        (0.80, 0.90, 0.35),
-        (0.90, 1.00, 0.20),
+        (0.40, 0.60, 0.75),
+        (0.60, 0.80, 0.65),
+        (0.80, 0.90, 0.20),
+        (0.90, 1.00, 0.10),
     ]
 
     total_minutes = 0.0
@@ -177,33 +176,33 @@ def calculate_charging_time_dc(
     return total_minutes
 
 
-def can_vehicle_charge_with_connector(vehicle, connector):
-    """
-    Funkcja przyjmuje 
-    """
-    plug_id = connector.get("plug_id")
+# def can_vehicle_charge_with_connector(vehicle, connector):
+#     """
+#     Funkcja przyjmuje 
+#     """
+#     plug_id = connector.get("plug_id")
     
-    # 1. Sprawdź czy mamy ten typ wtyczki w słowniku
-    mapping = PLUG_MAPPING.get(plug_id)
-    if not mapping:
-        return False, "Nieznany typ wtyczki"
+#     # 1. Sprawdź czy mamy ten typ wtyczki w słowniku
+#     mapping = PLUG_MAPPING.get(plug_id)
+#     if not mapping:
+#         return False, "Nieznany typ wtyczki"
 
-    target_key = mapping["key"]
-    conn_type = mapping["type"] # 'ac' lub 'dc'
+#     target_key = mapping["key"]
+#     conn_type = mapping["type"] # 'ac' lub 'dc'
 
-    # 2. Sprawdź kompatybilność w odpowiedniej sekcji auta
-    if conn_type == "ac":
-        supported_ports = vehicle.get("ac_charger", {}).get("ports", [])
-        if target_key in supported_ports or target_key == "schuko": 
-            # Schuko traktujemy jako 'zawsze kompatybilne' jeśli auto ma AC
-            return True, "AC"
+#     # 2. Sprawdź kompatybilność w odpowiedniej sekcji auta
+#     if conn_type == "ac":
+#         supported_ports = vehicle.get("ac_charger", {}).get("ports", [])
+#         if target_key in supported_ports or target_key == "schuko": 
+#             # Schuko traktujemy jako 'zawsze kompatybilne' jeśli auto ma AC
+#             return True, "AC"
     
-    elif conn_type == "dc":
-        supported_ports = vehicle.get("dc_charger", {}).get("ports", [])
-        if target_key in supported_ports:
-            return True, "DC"
+#     elif conn_type == "dc":
+#         supported_ports = vehicle.get("dc_charger", {}).get("ports", [])
+#         if target_key in supported_ports:
+#             return True, "DC"
 
-    return False, ""
+#     return False, ""
 
 
 async def get_cars():

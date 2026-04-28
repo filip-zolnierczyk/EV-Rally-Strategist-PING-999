@@ -98,8 +98,8 @@ async def get_charging_stations_async_max_result(latitude, longitude, maxresults
 #     with open(stations_path, 'w', encoding='utf-8') as f:
 #         json.dump([transform_charger_data(station) for station in stations], f, indent=4, ensure_ascii=False)
 
-async def get_charging_stations_async_max_result_(latitude, longitude, max_result=3):
-    stations = await get_charging_stations_async_max_result(latitude, longitude, maxresults=max_result, distance=100)
+async def get_charging_stations_async_max_result_(latitude, longitude, max_result=3, distance=100):
+    stations = await get_charging_stations_async_max_result(latitude, longitude, maxresults=max_result, distance=distance)
     if not stations:
         return []
     return [transform_charger_data(station) for station in stations]
