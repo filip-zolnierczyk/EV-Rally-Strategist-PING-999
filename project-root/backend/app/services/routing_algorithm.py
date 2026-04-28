@@ -92,6 +92,13 @@ async def solve(
             charging_cords = station['lon_lat']
             if d < curr_range:
                 break
+        else:
+            b_lon, b_lat = coordinates[int((curr_range/dist * len(coordinates))*0.5)]
+            stations = await get_charging_stations_async_max_result_(b_lat, b_lon, max_result=1, distance=curr_range/2)
+            if len(stations) ==0:
+                raise Exception(f"Could not find a charger on the route")
+            candidate_stations = stations
+            best_i = 0
         chargings['charger_info'].append(candidate_stations[best_i])
 
         # # Szukamy stacji, która minimalizuje całkowity czas przejazdu po jej dodaniu do trasy.
@@ -136,7 +143,7 @@ async def solve(
                     best_charger_power = charger_power
                     best_plug_id = plug_id
 
-            charging_time = calculate_charging_time(BATTERY_CAPACITY, plug_id=best_plug_id, start_value=curr_range/RANGE, goal_value=charging_cap)
+            charging_time = calculate_charging_time(BATTERY_CAPACITY, plug_id=best_plug_id, start_value=curr_range/(curr_range+d), goal_value=charging_cap)
             chargings['times'].append(charging_time)
             chargings['plugs'].append(PLUG_MAPPING[best_plug_id])
 

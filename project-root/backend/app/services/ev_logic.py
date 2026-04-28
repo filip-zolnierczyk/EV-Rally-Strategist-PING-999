@@ -21,7 +21,7 @@ PLUG_MAPPING = {
 
 def get_car_range_and_battery_capacity(carid):
     with open("app/data/ev-data.json", "r", encoding="utf-8") as f:
-        vehicles = json.load(f)
+        vehicles = json.load(f).get("data", [])
     for vehicle in vehicles:
         if vehicle.get("id") == carid:
             battery_size, average_consumption = vehicle.get("usable_battery_size"), vehicle.get("energy_consumption", {}).get("average_consumption")
@@ -136,7 +136,7 @@ def calculate_charging_time_dc(
     """
     Estimate DC charging time in minutes.
     """
-
+    print(start_value, goal_value)
     if battery_capacity <= 0:
         raise ValueError("battery_capacity must be > 0")
     if charger_power_kw <= 0:
@@ -209,7 +209,7 @@ async def get_cars():
     dir = Path(__file__).parent.parent
 
     with open(dir / "data/ev-data.json", "r", encoding="utf-8") as f:
-        data = json.load(f)
+        data = json.load(f).get("data", [])
 
     return [{
                 "id": vehicle_data.get("id"),
@@ -223,7 +223,7 @@ async def get_cars():
 
 def main():
     with open("app/data/ev-data.json", "r", encoding="utf-8") as f:
-        vehicles = json.load(f)
+        vehicles = json.load(f).get("data", [])
 
     with open("stations.json", "r", encoding="utf-8") as f:
         stations = json.load(f)
