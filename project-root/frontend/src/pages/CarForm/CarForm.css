@@ -1,0 +1,149 @@
+/* Główny kontener strony - dopasowany do tła planera */
+.car-page-wrapper {
+  padding: 40px 20px;
+  font-family: 'Inter', -apple-system, sans-serif;
+  background-color: #f8f9fa; /* Jasnoszare tło strony */
+  min-height: 100vh;
+  color: #333;
+}
+
+/* Kontener formularza jako biała karta */
+.car-form-container {
+  max-width: 800px;
+  margin: 0 auto 40px auto;
+  background: white;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e9ecef;
+}
+
+.car-form-container h1 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: #212529;
+}
+
+/* Układ pól formularza */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #495057;
+}
+
+/* Style inputów identyczne jak w Route Plannerze */
+.form-group input, 
+.form-group select {
+  padding: 10px 14px;
+  background: white;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  color: #212529;
+  font-size: 15px;
+  transition: all 0.2s ease-in-out;
+}
+
+.form-group input:focus, 
+.form-group select:focus {
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.form-group input::placeholder {
+  color: #adb5bd;
+  opacity: 1;
+}
+
+/* Przycisk - szary/niebieski w stylu Twojego "Wyznacz trasę" */
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  background: #6c757d; /* Kolor zbliżony do Twojego przycisku "Wyznacz trasę" */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 8px;
+}
+
+.submit-btn:hover:not(:disabled) {
+  background: #5a6268;
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+}
+
+/* Karty samochodów analogiczne do listy pojazdów */
+.cars-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.car-card {
+  background: white;
+  border: 1px solid #dee2e6;
+  padding: 20px;
+  border-radius: 12px;
+  transition: border-color 0.2s;
+  cursor: pointer;
+}
+
+/* Niebieska ramka po najechaniu lub dla "wybranego" auta */
+.car-card:hover {
+  border-color: #007bff;
+  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.1);
+}
+
+.car-card h2 {
+  font-size: 18px;
+  margin: 0 0 8px 0;
+  color: #212529;
+}
+
+.car-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.car-details p {
+  margin: 0;
+  color: #6c757d;
+  font-size: 13px;
+}
+
+.view-link {
+  display: inline-block;
+  margin-top: 12px;
+  color: #007bff;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.view-link:hover {
+  text-decoration: underline;
+}
