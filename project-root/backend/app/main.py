@@ -16,6 +16,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from .services.routing_algorithm import solve
 from .services.ev_logic import get_cars as get_list_of_cars
+from .services.smart_car_selection import get_selected_cars
 import asyncio
 import polyline
 
@@ -57,6 +58,38 @@ class RouteRequest(BaseModel):
         description="Maksymalny czas pojedynczego postoju w minutach"
     )
 
+class CarSelectionRequest(BaseModel):
+    min_price: float = Field(
+        ...,
+        json_schema_extra={"example": 10000},
+        description="Minimalna cena pojazdu"
+        # Unspecified: -1
+    )
+    max_price: float = Field(
+        ...,
+        json_schema_extra={"example": 1000000},
+        description="Maksymalna cena pojazdu"
+        # Unspecified: -1
+    )
+    range: float = Field(
+        ...,
+        json_schema_extra={"example": 300},
+        description="Minimalny zasięg pojazdu w kilometrach"
+        # Unspecified: -1
+    )
+    body_type: str = Field(
+        ...,
+        json_schema_extra={"example": "SUV"},
+        description="Typ nadwozia pojazdu (np. sedan, hatchback, SUV)"
+        # Unspecified: "any"
+    )
+    seats: int = Field(
+        ...,
+        json_schema_extra={"example": 5},
+        description="Liczba miejsc w pojeździe"
+        # Unspecified: -1
+    )
+
 
 app = FastAPI()
 
@@ -94,3 +127,8 @@ async def calculate_distance(data: RouteRequest):
 @app.get("/cars")
 async def get_cars():
     return await get_list_of_cars()
+
+@app.post("/choose_my_car")
+async def choose_my_car(data: CarSelectionRequest):
+    cars = get_selected_cars(data.min_price, data.max_price, data.range, data.body_type, data.seats)
+    return cars
