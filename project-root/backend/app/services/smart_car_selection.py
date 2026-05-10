@@ -14,7 +14,7 @@ def get_selected_cars(min_price, max_price, range, body_type, seats):
             except:
                 price = 1 #niektóre nie mają ceny wpisanej 
 
-            if (max_price >= price >= min_price) or (min_price == -1):
+            if (max_price >= price >= min_price) or (max_price == -1):
                     car_body = car["body"]["style"].lower()
                     if (body_type == "any") or (car_body == body_type.lower()):
                         car_seats = car["body"]["seats"]
