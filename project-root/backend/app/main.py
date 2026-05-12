@@ -10,7 +10,7 @@ Uruchamianie za pomocą dockera:
 '''
 
 
-from typing import Tuple, List
+from typing import List
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
@@ -43,6 +43,18 @@ class RouteRequest(BaseModel):
     charging_to_100: bool = Field(
         default=False,
         description="Czy ładować do 100% czy do 80%"
+    )
+    charger_type: str = Field(
+        default="all",
+        description="Typ preferowanych ładowarek (all, ac, dc)"
+    )
+    min_charger_power: int = Field(
+        default=0,
+        description="Minimalna moc ładowarki w kW"
+    )
+    max_stop_time: int = Field(
+        default=480,
+        description="Maksymalny czas pojedynczego postoju w minutach"
     )
 
 

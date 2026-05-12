@@ -45,14 +45,17 @@ def can_vehicle_charge_with_connector(vehicle, connector):
 
     # 2. Sprawdź kompatybilność w odpowiedniej sekcji auta
     if conn_type == "ac":
-        supported_ports = vehicle.get("ac_charger", {}).get("ports", [])
+        ac_charger = vehicle.get("ac_charger") or {}
+        supported_ports = ac_charger.get("ports", [])
             
         if target_key in supported_ports or target_key == "schuko": 
             # Schuko traktujemy jako 'zawsze kompatybilne' jeśli auto ma AC
             return True, plug_id, mapping['charger_power_kw']
     
     elif conn_type == "dc":
-        supported_ports = vehicle.get("dc_charger", {}).get("ports", [])
+        dc_charger = vehicle.get("dc_charger") or {}
+        supported_ports = dc_charger.get("ports", [])
+        
         if target_key in supported_ports:
             return True, plug_id, mapping['charger_power_kw']
 

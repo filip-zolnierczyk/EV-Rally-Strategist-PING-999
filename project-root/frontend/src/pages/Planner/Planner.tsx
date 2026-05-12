@@ -14,6 +14,9 @@ export default function Planner() {
     carId: string,
     currDateTime: string,
     chargingTo100: boolean,
+    chargerType: "all" | "ac" | "dc" = "all",
+    minChargerPower: number = 0,
+    maxStopTime: number = 480,
   ) => {
     setIsLoading(true);
     try {
@@ -23,6 +26,9 @@ export default function Planner() {
         carId,
         currDateTime,
         chargingTo100,
+        chargerType,
+        minChargerPower,
+        maxStopTime,
       );
       setRouteData(data);
     } catch (error) {

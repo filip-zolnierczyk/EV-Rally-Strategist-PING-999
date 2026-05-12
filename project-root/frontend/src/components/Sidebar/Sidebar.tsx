@@ -6,11 +6,15 @@ import "./Sidebar.css";
 
 interface SidebarProps {
   onPlanRoute: (
-      startCoords: [number, number],
-      endCoords: [number, number],
-      carId: string,
-      departureDateTime: string,
-      chargingTo100: boolean) => void;
+    startCoords: [number, number],
+    endCoords: [number, number],
+    carId: string,
+    departureDateTime: string,
+    chargingTo100: boolean,
+    chargerType?: "all" | "ac" | "dc",
+    minChargerPower?: number,
+    maxStopTime?: number,
+  ) => void;
   routeData: any;
   isLoading: boolean;
 }
@@ -35,6 +39,13 @@ export default function Sidebar({
   const [selectedBrand, setSelectedBrand] = useState("");
   const [selectedYear, setSelectedYear] = useState("");
 
+  const [chargingTo100, setChargingTo100] = useState(false);
+
+  // Filtry dla ładowarek
+  const [chargerType, setChargerType] = useState<"all" | "ac" | "dc">("all");
+  const [minChargerPower, setMinChargerPower] = useState(0);
+  const [maxStopTime, setMaxStopTime] = useState(180); // w minutach, default 3h
+
   useEffect(() => {
     const fetchCarsData = async () => {
       try {
@@ -48,11 +59,19 @@ export default function Sidebar({
     fetchCarsData();
   }, []);
 
-  const [chargingTo100, setChargingTo100] = useState(false);
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (startCoords && endCoords && selectedCar) {
-      onPlanRoute(startCoords, endCoords, selectedCar, departureDateTime, chargingTo100);
+      onPlanRoute(
+        startCoords,
+        endCoords,
+        selectedCar,
+        departureDateTime,
+        chargingTo100,
+        chargerType,
+        minChargerPower,
+        maxStopTime,
+      );
     } else {
       alert("Wybierz dokładny adres z listy podpowiedzi.");
     }
@@ -85,10 +104,12 @@ export default function Sidebar({
   const getChargerName = (chargerInfo: any): string => {
     if (!chargerInfo) return "Nieznana stacja";
     // Try various possible name fields from the API response
-    return chargerInfo.name ||
-           chargerInfo.title ||
-           chargerInfo.station_name ||
-           "Nieznana stacja";
+    return (
+      chargerInfo.name ||
+      chargerInfo.title ||
+      chargerInfo.station_name ||
+      "Nieznana stacja"
+    );
   };
 
   return (
@@ -187,6 +208,82 @@ export default function Sidebar({
               <span>Ładować do 100% (domyślnie 80%)</span>
             </label>
           </div>
+
+          <details className="charger-filters">
+            <summary>Filtry ładowarek</summary>
+
+            <div className="filter-group">
+              <label htmlFor="charger-type">Typ ładowarki:</label>
+              <select
+                id="charger-type"
+                value={chargerType}
+                onChange={(e) =>
+                  setChargerType(e.target.value as "all" | "ac" | "dc")
+                }
+              >
+                <option value="all">Wszystkie (AC + DC)</option>
+                <option value="ac">Tylko AC (powolne, 2-11 kW)</option>
+                <option value="dc">Tylko DC (szybkie, 50-250 kW)</option>
+              </select>
+            </div>
+
+            <div className="filter-group">
+              <label htmlFor="min-power">
+                Minimalna moc: <strong>{minChargerPower} kW</strong>
+              </label>
+              <input
+                id="min-power"
+                type="range"
+                min="0"
+                max="250"
+                step="10"
+                value={minChargerPower}
+                onChange={(e) => setMinChargerPower(Number(e.target.value))}
+              />
+              <div className="power-labels">
+                <span>0 kW</span>
+                <span>250 kW</span>
+              </div>
+            </div>
+
+            <div className="filter-group">
+              <label htmlFor="max-stop-time">
+                Max czas postoju:{" "}
+                <strong>
+                  {Math.floor(maxStopTime / 60)}h {maxStopTime % 60}min
+                </strong>
+              </label>
+              <input
+                id="max-stop-time"
+                type="range"
+                min="15"
+                max="480"
+                step="15"
+                value={maxStopTime}
+                onChange={(e) => setMaxStopTime(Number(e.target.value))}
+              />
+              <div className="time-labels">
+                <span>15 min</span>
+                <span>8h</span>
+              </div>
+            </div>
+          </details>
+
+          <div className="active-filters-info">
+            {chargerType !== "all" && (
+              <span className="filter-badge">
+                {chargerType === "ac" ? "AC" : "DC"}
+              </span>
+            )}
+            {minChargerPower > 0 && (
+              <span className="filter-badge">≥ {minChargerPower} kW</span>
+            )}
+            {maxStopTime < 480 && (
+              <span className="filter-badge">
+                Max {Math.floor(maxStopTime / 60)}h {maxStopTime % 60}min
+              </span>
+            )}
+          </div>
           <button
             type="submit"
             disabled={isLoading || !startCoords || !endCoords || !selectedCar}
@@ -212,7 +309,10 @@ export default function Sidebar({
             </div>
             {routeData.cost !== undefined && (
               <div className="cost-info">
-                Szacowany koszt energii: <strong className="cost-value">{formatCost(routeData.cost)}</strong>
+                Szacowany koszt energii:{" "}
+                <strong className="cost-value">
+                  {formatCost(routeData.cost)}
+                </strong>
               </div>
             )}
           </div>
@@ -235,12 +335,14 @@ export default function Sidebar({
                       </div>
                       {routeData.charging_time?.[index] && (
                         <div className="charging-duration">
-                          Czas ładowania: {formatTime(routeData.charging_time[index])}
+                          Czas ładowania:{" "}
+                          {formatTime(routeData.charging_time[index])}
                         </div>
                       )}
                       {routeData.plugs?.[index] && (
                         <div className="plug-type">
-                          {routeData.plugs[index].plug_name || "Nieznany typ złącza"}
+                          {routeData.plugs[index].plug_name ||
+                            "Nieznany typ złącza"}
                         </div>
                       )}
                     </div>
