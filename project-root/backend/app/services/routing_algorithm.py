@@ -131,10 +131,11 @@ async def solve(
             # Przeliczenie pozostałej części trasy: od ostatniej stacji do celu.
             dist, time, coordinates, _ = calculate_route([chargings['cords'][-1]] + [end_point], steps=False)
 
-            # Aktualizacja „stanu baterii” w uproszczonym modelu.
-            curr_range -= d
-
             # Wyznaczenie czasu ładowania dla aktualnego postoju.
+            # WAŻNE: Calculate start_value BEFORE curr_range is used for next iteration
+            # start_value = proporacja baterii, gdzie RANGE to max autonomy w km
+            start_battery_soc = max(0.0, (curr_range - d) / RANGE)  # Stan baterii gdy dojedzie do ładowarki
+            
             best_plug_id = 28
             best_charger_power = 0
             for connector in candidate_stations[best_i].get('connectors', []):
@@ -143,12 +144,12 @@ async def solve(
                     best_charger_power = charger_power
                     best_plug_id = plug_id
 
-            charging_time = calculate_charging_time(BATTERY_CAPACITY, plug_id=best_plug_id, start_value=curr_range/(curr_range+d), goal_value=charging_cap)
+            charging_time = calculate_charging_time(BATTERY_CAPACITY, plug_id=best_plug_id, start_value=start_battery_soc, goal_value=charging_cap)
             chargings['times'].append(charging_time)
             chargings['plugs'].append(PLUG_MAPPING[best_plug_id])
 
             # Pobranie prognozy temperatury na moment dotarcia do tej stacji
-            # i przeliczenie zasięgu po ładowaniu do 80%.
+            # i pełne naładowanie do 80% (lub 100%).
             temperature = await get_temperature_async(charging_cords[1], charging_cords[0], now + timedelta(minutes=min_time))
             curr_range = calculate_range(charging_cap*RANGE, temperature)
         else:
@@ -162,10 +163,12 @@ async def solve(
     # print(f" DEBUG: {chargings['times']}")
     # Zwracamy: listę stacji ładowania, dystans, czas, geometrię trasy, ew czasy każdego ładowania
     total_time = time + sum(chargings['times'])
-    if chargings['cords']:
-        cost = await calculate_electricity_cost(chargings['cords'], vehicle.get("energy_consumption").get("average_consumption"), dist)
-    else:
-        cost = await calculate_electricity_cost([start_point], vehicle.get("energy_consumption").get("average_consumption"), dist)
+    
+    # Oblicz koszt energii na podstawie wszystkich ważnych punktów trasy
+    # (start, stacje ładowania, koniec) dla dokładnej średniej ceny prądu
+    price_waypoints = [start_point] + chargings['cords'] + [end_point]
+    cost = await calculate_electricity_cost(price_waypoints, vehicle.get("energy_consumption").get("average_consumption"), dist)
+    
     return chargings, dist, time, coordinates, total_time, cost
 
 

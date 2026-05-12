@@ -106,23 +106,29 @@ def calculate_charging_time_ac(
 ) -> float:
     """
     Estimate AC charging time in minutes.
+    battery_capacity: battery size in kWh
+    charger_param: power of charger in kW
+    start_value: starting SOC (0-1)
+    goal_value: target SOC (0-1)
     """
 
-    print(f"DEBUG ------------------ {start_value} -- {goal_value}")
-    # if not (0 <= start_value < goal_value <= 1):
-    #     raise ValueError("start_value and goal_value must be in [0,1] and start < goal")
+    # Ensure values are within valid range
+    start_value = max(0.0, min(1.0, start_value))
+    goal_value = max(start_value, min(1.0, goal_value))
 
-    # Tu jest problem bo nie do końca sprawdzane jest czy do ładowarki da się dojechać - problem jest bo star_value jest ujemne wtedy xD
-    # To na chwilę TODO
-    start_value = max(start_value, 0.0)
+    if start_value >= goal_value:
+        return 0.0  # Already charged enough
 
-
+    # AC charging typically has two phases:
+    # - Fast phase up to 80%: full charger power
+    # - Slow phase from 80-100%: reduced power (about 50%)
     fast_end = min(goal_value, 0.8)
 
     fast_energy = battery_capacity * max(0.0, fast_end - start_value)
     slow_energy = battery_capacity * max(0.0, goal_value - 0.8)
-    fast_time = fast_energy / charger_param * 60
-    slow_time = slow_energy / (charger_param * 0.5) * 60  # slower phase
+    
+    fast_time = (fast_energy / charger_param) * 60  # convert to minutes
+    slow_time = (slow_energy / (charger_param * 0.5)) * 60  # slower phase at 50% power
 
     return fast_time + slow_time
 
@@ -134,17 +140,21 @@ def calculate_charging_time_dc(
     vehicle_max_dc_kw: float = 170.0,
 ) -> float:
     """
-    Estimate DC charging time in minutes.
+    Estimate DC charging time in minutes with realistic power degradation curve.
     """
-    print(start_value, goal_value)
     if battery_capacity <= 0:
         raise ValueError("battery_capacity must be > 0")
     if charger_power_kw <= 0:
         raise ValueError("charger_power_kw must be > 0")
     if vehicle_max_dc_kw <= 0:
         raise ValueError("vehicle_max_dc_kw must be > 0")
-    if not (0 <= start_value < goal_value <= 1):
-        raise ValueError("start_value and goal_value must be in [0,1] and start < goal")
+    
+    # Clamp values to valid range
+    start_value = max(0.0, min(1.0, start_value))
+    goal_value = max(start_value, min(1.0, goal_value))
+    
+    if start_value >= goal_value:
+        return 0.0  # Already charged enough
 
     available_power = min(charger_power_kw, vehicle_max_dc_kw)
 
