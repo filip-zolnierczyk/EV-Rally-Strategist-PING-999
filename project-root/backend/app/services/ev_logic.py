@@ -222,7 +222,7 @@ async def get_cars():
     dir = Path(__file__).parent.parent
 
     with open(dir / "data/ev-data.json", "r", encoding="utf-8") as f:
-        data = json.load(f)
+        data = json.load(f).get("data", [])
 
     return [{
                 "id": vehicle_data.get("id"),
