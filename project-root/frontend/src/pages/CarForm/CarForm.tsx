@@ -41,8 +41,8 @@ const CarForm: React.FC = () => {
 
     // Konwersja danych przed wysyłką: jeśli puste -> -1, inaczej -> Number
     const dataToSend = {
-      min_price: formData.min_price === '' ? -1 : Number(formData.min_price),
-      max_price: formData.max_price === '' ? -1 : Number(formData.max_price),
+      min_price: formData.min_price === '' ? -1 : Number(formData.min_price) * 1000,
+      max_price: formData.max_price === '' ? -1 : Number(formData.max_price) * 1000,
       range: formData.range === '' ? -1 : Number(formData.range),
       seats: formData.seats === '' ? -1 : Number(formData.seats),
       body_type: formData.body_type, // tu już jest "any" lub konkretna marka
@@ -73,7 +73,7 @@ const CarForm: React.FC = () => {
         <form onSubmit={handleSubmit} className="car-form">
           <div className="form-grid">
             <div className="form-group">
-              <label>Minimalna cena (USD)</label>
+              <label>Minimalna cena (tys. USD)</label>
               <input 
                 type="number" 
                 name="min_price" 
@@ -83,7 +83,7 @@ const CarForm: React.FC = () => {
               />
             </div>
             <div className="form-group">
-              <label>Maksymalna cena (USD)</label>
+              <label>Maksymalna cena (tys. USD)</label>
               <input 
                 type="number" 
                 name="max_price" 
