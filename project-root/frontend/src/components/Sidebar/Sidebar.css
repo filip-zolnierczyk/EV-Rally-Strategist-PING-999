@@ -2,12 +2,18 @@
   width: 400px;
   background-color: #f8f9fa;
   padding: 20px;
-  height: 100%;
+  height: calc(100vh - 60px);
+  box-sizing: border-box;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 24px;
   border-right: 1px solid #e9ecef;
+}
+
+.car-selection,
+.route-form-section {
+  flex-shrink: 0;
 }
 
 .sidebar h2 {
@@ -75,6 +81,13 @@
 .route-form button:disabled {
   background-color: #6c757d;
   cursor: not-allowed;
+}
+
+.route-results {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
 }
 
 .summary-stats {
@@ -259,4 +272,3 @@
   font-size: 1.1em;
   font-weight: 600;
 }
-

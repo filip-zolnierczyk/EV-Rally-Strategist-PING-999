@@ -64,6 +64,8 @@ export default function MapView({ routeData }: { routeData: any }) {
     ? routeData.chargings.map((c: [number, number]) => [c[1], c[0]])
     : [];
 
+  const chargerInfo = routeData?.charger_info || [];
+
   return (
     <div className="map-wrapper">
       <MapContainer
@@ -103,7 +105,7 @@ export default function MapView({ routeData }: { routeData: any }) {
                 position={station}
                 icon={chargeIcon}
               >
-                <Popup>Stacja ładowania {index + 1}</Popup>
+                <Popup>{chargerInfo[index]?.name || `Stacja ładowania ${index + 1}`}</Popup>
               </Marker>
             ))}
           </>
